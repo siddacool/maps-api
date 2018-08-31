@@ -1,0 +1,25 @@
+.home {
+  &--admin {
+    
+  }
+
+  .admin-logout {
+    display: block;
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 1000;
+  }
+
+  .add-point {
+    background-color: #fff;
+    bottom: 1rem;
+    display: block;
+    height: 200px;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    width: 100vw;
+    z-index: 400;
+  }
+}

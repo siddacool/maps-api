@@ -1,0 +1,24 @@
+.btn {
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #dadada;
+  border-radius: 20px;
+  display: inline-flex;
+  font-weight: 600;
+  height: 30px;
+  justify-content: center;
+  letter-spacing: .5px;
+  margin-right: 10px;
+  min-width: 52px;
+  padding-bottom: 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 2px;
+  text-transform: capitalize;
+
+  &--active {
+    background-color: #1202e6;
+    border-color: #1202e6;
+    color: #fff;
+  }
+}

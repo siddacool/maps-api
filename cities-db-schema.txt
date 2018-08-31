@@ -1,0 +1,52 @@
+[
+  {
+    "name": {
+      "type": "String",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "mumbai"
+    },
+    "country_code": {
+      "type": "String",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "IND"
+    },
+    "city_id": {
+      "type": "String",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "sunset-somewhere-ffggf"
+    },
+    "timezone": {
+      "type": "String",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "+05:30"
+    },
+    "lat": {
+      "type": "Number",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "13.55"
+    },
+    "lng": {
+      "type": "Number",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "13.55"
+    },
+    "isCapital": {
+      "type": "Boolean",
+      "isRequired": false,
+      "isPublic": true,
+      "value": "true"
+    },
+    "area": {
+      "type": "Number",
+      "isRequired": false,
+      "isPublic": true,
+      "value": "54"
+    }
+  }
+]
