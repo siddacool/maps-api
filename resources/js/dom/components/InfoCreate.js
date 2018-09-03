@@ -3,7 +3,7 @@ import SelectBtn from './InfoSelectBtn';
 import Close from './InfoCloseBtn';
 import FormCity from './FormCity';
 import FormCountry from './FormCountry';
-import InfoSave from './InfoSave';
+import InfoSave from './InfoSaveBtn';
 
 const Form = [
   FormCity,
@@ -27,7 +27,7 @@ export default class extends Component {
     const close = new Close();
     const thisForm = type === 'city' ? Form[0] : Form[1];
     const form = thisForm(lat, lng);
-    const infoSave = new InfoSave(type);
+    const infoSave = new InfoSave();
 
     return `
       <div class="info info--create">

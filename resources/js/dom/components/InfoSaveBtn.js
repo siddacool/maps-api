@@ -6,7 +6,7 @@ import {
 } from '../utils/firebase-db-manipulation';
 
 function saveCity() {
-  const insert = document.querySelector('.info--create');
+  const insert = document.querySelector('.info');
   const close = insert.querySelector('.close-btn');
   const nameField = insert.querySelector('.name');
   const name = nameField.value;
@@ -44,7 +44,7 @@ function saveCity() {
 }
 
 function saveCountry() {
-  const insert = document.querySelector('.info--create');
+  const insert = document.querySelector('.info');
   const close = insert.querySelector('.close-btn');
   const nameField = insert.querySelector('.name');
   const name = nameField.value;
@@ -81,23 +81,25 @@ const save = [
 ];
 
 export default class extends Component {
-  constructor(type = 'country') {
+  constructor() {
     super();
-    this.type = type;
   }
 
   Markup() {
     return `
-      <a href="#" class="btn btn--safe">Save ${this.type}</a>
+      <a href="#" class="btn btn--safe">
+        <svg role="img" class="icon">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-iconmonstr-check-mark-10"></use>
+        </svg>
+      </a>
     `;
   }
 
   Events() {
-    const type = this.type;
-
     this.Click((self, e) => {
       e.preventDefault();
-      const savePlace = type === 'city' ? save[0] : save[1];
+      const form = document.querySelector('.info__form').getAttribute('data-type');
+      const savePlace = form === 'city' ? save[0] : save[1];
 
       savePlace();
     });

@@ -2,16 +2,28 @@ import firebase from 'firebase';
 import { Component } from 'domr-framework';
 import * as L from 'leaflet';
 import InfoCreate from '../components/InfoCreate';
+import InfoEdit from '../components/InfoEdit';
 import { findPlaceByCoordinates } from '../utils/firebase-db-manipulation';
 
 function appendInfoCreate(thisSelf, lat, lng) {
   const infoCreate = new InfoCreate(lat, lng);
 
-  if (document.querySelector('.info--create')) {
-    const infoCreateCopy = document.querySelector('.info--create');
+  if (document.querySelector('.info')) {
+    const infoCreateCopy = document.querySelector('.info');
     infoCreate.Replace(infoCreateCopy);
   } else {
     infoCreate.After(thisSelf);
+  }
+}
+
+function appendInfoEdit(thisSelf, data) {
+  const infoEdit = new InfoEdit(data);
+
+  if (document.querySelector('.info')) {
+    const infoCreateCopy = document.querySelector('.info');
+    infoEdit.Replace(infoCreateCopy);
+  } else {
+    infoEdit.After(thisSelf);
   }
 }
 
@@ -91,6 +103,9 @@ export default class extends Component {
       .then((data) => {
         if (data === '') {
           appendInfoCreate(thisSelf, lat, lng);
+        } else {
+          console.log(data);
+          appendInfoEdit(thisSelf, data);
         }
       })
       .catch(() => {

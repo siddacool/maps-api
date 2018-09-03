@@ -1,11 +1,12 @@
 import iterate from '../utils/iterate-data';
 
 function makeTextbox(data, name, placeholder) {
+  const modName = name.replace(/-/g, '_');
   return `
     <label for="${name}" class="txt txt--drop">
       <input type="text" class="${name}" name="${name}" 
         placeholder="${placeholder}" 
-        value="${iterate(data, name)}"
+        value="${iterate(data, modName)}"
       />
       <span>${placeholder}</span>
     </label>

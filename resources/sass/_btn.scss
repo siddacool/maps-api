@@ -20,5 +20,29 @@
     background-color: #1202e6;
     border-color: #1202e6;
     color: #fff;
+
+    svg {
+      fill: #fff;
+    }
+  }
+
+  &--danger {
+    background-color: red;
+    border-color: red;
+    color: #fff;
+
+    svg {
+      fill: #fff;
+    }
+  }
+
+  &--safe {
+    background-color: #1db34b;
+    border-color: #1db34b;
+    color: #fff;
+
+    svg {
+      fill: #fff;
+    }
   }
 }
