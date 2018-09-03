@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import { Component } from 'domr-framework';
 import * as L from 'leaflet';
 import InfoCreate from '../components/InfoCreate';
@@ -54,6 +55,10 @@ export default class extends Component {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(mymap);
 
+    const marker = L.marker([0, 0]).addTo(mymap);
+
+    marker.setOpacity(0);
+
     dbRefObject.on('value', (snap) => {
       if (snap.val()) {
         circlesLayer.clearLayers();
@@ -98,6 +103,9 @@ export default class extends Component {
     mymap.on('click', (e) => {
       const lat = e.latlng.lat.toFixed(1);
       const lng = e.latlng.lng.toFixed(1);
+
+      marker.setLatLng(e.latlng);
+      marker.setOpacity(0.9);
 
       findPlaceByCoordinates(lat, lng)
       .then((data) => {

@@ -1,4 +1,5 @@
 import iterate from '../utils/iterate-data';
+import CountrySelect from './CountrySelect';
 
 function makeTextbox(data, name, placeholder) {
   const modName = name.replace(/-/g, '_');
@@ -21,7 +22,7 @@ function makeFixed(data, name, value) {
 
 export default function (lat, lng, data = {}) {
   const cityName = makeTextbox(data, 'name', 'City Name');
-  const countryCode = makeTextbox(data, 'country-code', 'Country Code');
+  const countryCode = new CountrySelect(data, 'country-code', 'Country Name');
   const lati = makeFixed(data, 'lat', lat);
   const lngi = makeFixed(data, 'lng', lng);
   const timezone = makeTextbox(data, 'timezone', 'Timezone');
@@ -29,13 +30,18 @@ export default function (lat, lng, data = {}) {
 
   return `
     <div class="info__form info__form--city" data-type="city" data-id="${iterate(data, 'city_id')}">
-     ${cityName}
-     ${countryCode}
-     ${lati}
-     ${lngi}
-     <div class="gap"></div>
-     ${timezone}
-     ${area}
+      ${cityName}
+      ${countryCode.Render()}
+      ${lati}
+      ${lngi}
+      <div class="gap"></div>
+      ${timezone}
+      ${area}
+      <label class="checkbox">
+        <input type="checkbox" name="isCapital" value="isCapital" class="isCapital" 
+          ${iterate(data, 'isCapital') ? 'checked' : ''}
+        /> Capital City
+      </label>
     </div>
   `;
 }

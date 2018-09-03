@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 function saveCityData(obj = {}) {
   const promiseObj = new Promise((resolve, reject) => {
@@ -209,10 +210,10 @@ function findPlaceByCoordinates(lat, lng) {
           const thisLngRound = Math.round(thisCity.lng);
           const latRound = Math.round(lat);
           const lngRound = Math.round(lng);
-          const latMax = latRound + 2;
-          const lngMax = lngRound + 2;
-          const latMin = latRound - 2;
-          const lngMin = lngRound - 2;
+          const latMax = latRound + 1;
+          const lngMax = lngRound + 1;
+          const latMin = latRound - 1;
+          const lngMin = lngRound - 1;
 
           if (thisLatRound <= latMax && thisLatRound >= latMin
             && thisLngRound <= lngMax && thisLngRound >= lngMin) {
@@ -247,10 +248,10 @@ function findCityByCoordinates(lat, lng) {
             const thisLngRound = Math.round(thisCity.lng);
             const latRound = Math.round(lat);
             const lngRound = Math.round(lng);
-            const latMax = latRound + 2;
-            const lngMax = lngRound + 2;
-            const latMin = latRound - 2;
-            const lngMin = lngRound - 2;
+            const latMax = latRound + 1;
+            const lngMax = lngRound + 1;
+            const latMin = latRound - 1;
+            const lngMin = lngRound - 1;
 
             if (thisLatRound <= latMax && thisLatRound >= latMin
               && thisLngRound <= lngMax && thisLngRound >= lngMin) {
@@ -286,10 +287,10 @@ function findCountryByCoordinates(lat, lng) {
             const thisLngRound = Math.round(thisCountry.lng);
             const latRound = Math.round(lat);
             const lngRound = Math.round(lng);
-            const latMax = latRound + 2;
-            const lngMax = lngRound + 2;
-            const latMin = latRound - 2;
-            const lngMin = lngRound - 2;
+            const latMax = latRound + 1;
+            const lngMax = lngRound + 1;
+            const latMin = latRound - 1;
+            const lngMin = lngRound - 1;
 
             if (thisLatRound <= latMax && thisLatRound >= latMin
               && thisLngRound <= lngMax && thisLngRound >= lngMin) {

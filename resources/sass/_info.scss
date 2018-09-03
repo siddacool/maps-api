@@ -90,8 +90,14 @@
         margin-bottom: 21px;
         margin-left: 10px;
         margin-right: 10px;
-        width: 23.289%;
+        width: calc(25% - 20px);
       }
+    }
+
+    .checkbox {
+      align-items: flex-end;
+      align-self: flex-end;
+      display: flex;
     }
   }
 }

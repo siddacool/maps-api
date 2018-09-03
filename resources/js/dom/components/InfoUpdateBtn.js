@@ -19,6 +19,7 @@ function updateCity() {
   const area = areaField.value;
   const lat = insert.querySelector('.lat').querySelector('span').innerText;
   const lng = insert.querySelector('.lng').querySelector('span').innerText;
+  const isCapital = insert.querySelector('.isCapital').checked;
 
   if (name !== '' && countryCode !== '') {
     updateCityData(cityId, {
@@ -28,14 +29,20 @@ function updateCity() {
       lng,
       timezone,
       area,
+      isCapital,
     }).then(() => {
       close.click();
     }).catch((err) => {
       console.log(err);
     });
   } else {
-    nameField.parentElement.classList.add('txt--red');
-    countryCodeField.parentElement.classList.add('txt--red');
+    if (name.trim() === '') {
+      nameField.parentElement.classList.add('txt--red');
+    }
+
+    if (countryCode.trim() === '') {
+      countryCodeField.parentElement.classList.add('txt--red');
+    }
   }
 
   setTimeout(() => {
@@ -67,8 +74,13 @@ function updateCountry() {
       console.log(err);
     });
   } else {
-    nameField.parentElement.classList.add('txt--red');
-    countryCodeField.parentElement.classList.add('txt--red');
+    if (name.trim() === '') {
+      nameField.parentElement.classList.add('txt--red');
+    }
+
+    if (countryCode.trim() === '') {
+      countryCodeField.parentElement.classList.add('txt--red');
+    }
   }
 
   setTimeout(() => {
