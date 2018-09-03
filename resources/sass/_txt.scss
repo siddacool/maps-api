@@ -2,12 +2,20 @@
   display: block;
   font-size: 16px;
 
-  input {
+  input,
+  select {
     border: 0;
     border-bottom: 2px solid #000;
+    border-bottom-color: #000;
     display: block;
     padding: 6px 4px;
+    transition: border 400ms;
     width: 100%;
+  }
+
+  select {
+    padding-bottom: 4px;
+    padding-left: 0;
   }
 
   input:focus::-webkit-input-placeholder { color:transparent; }
@@ -34,6 +42,19 @@
           opacity: 1;
         }
       }
+
+      &:not(:placeholder-shown) {
+        & + span {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &--red {
+    input,
+    select {
+      border-bottom-color: red;
     }
   }
 }

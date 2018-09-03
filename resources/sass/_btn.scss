@@ -17,8 +17,32 @@
   text-transform: capitalize;
 
   &--active {
-    background-color: #1202e6;
-    border-color: #1202e6;
+    background-color: #5d50ff;
+    border-color: #5d50ff;
     color: #fff;
+
+    svg {
+      fill: #fff;
+    }
+  }
+
+  &--danger {
+    background-color: #ececec;
+    border-color: #ececec;
+    color: red;
+
+    svg {
+      fill: red;
+    }
+  }
+
+  &--safe {
+    background-color: #ececec;
+    border-color: #ececec;
+    color: #1db34b;
+
+    svg {
+      fill: #1db34b;
+    }
   }
 }

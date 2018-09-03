@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import LoginPageContainer from '../containers/LoginPageContainer';
 import AdminPageContainer from '../containers/AdminPageContainer';
 import config from '../../../../config.env';
