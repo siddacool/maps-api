@@ -14,7 +14,7 @@ function makeTextbox(data, name, placeholder) {
 
 function makeFixed(data, name, value) {
   return `
-    <div class="fixed-fields"><b>${name}</b><span>${data && data[name] ? data[name] : value}</span></div>
+    <div class="fixed-fields ${name}"><b>${name}</b><span>${data && data[name] ? data[name] : value}</span></div>
   `;
 }
 

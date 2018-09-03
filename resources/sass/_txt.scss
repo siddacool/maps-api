@@ -7,6 +7,7 @@
     border-bottom: 2px solid #000;
     display: block;
     padding: 6px 4px;
+    transition: border 400ms;
     width: 100%;
   }
 
@@ -34,6 +35,12 @@
           opacity: 1;
         }
       }
+    }
+  }
+
+  &--red {
+    input {
+      border-bottom-color: red;
     }
   }
 }

@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 
-
 function saveCityData(obj = {}) {
   const promiseObj = new Promise((resolve, reject) => {
     const dbRefObject = firebase.database().ref();
@@ -197,6 +196,43 @@ function deleteCountryData(countryId) {
   return promiseObj;
 }
 
+function findPlaceByCoordinates(lat, lng) {
+  const promiseObj = new Promise((resolve, reject) => {
+    const dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', (snap) => {
+      if (snap.val()) {
+        const valueSnap = snap.val();
+
+        Object.keys(valueSnap).forEach((key) => {
+          const thisCity = valueSnap[key];
+          const thisLatRound = Math.round(thisCity.lat);
+          const thisLngRound = Math.round(thisCity.lng);
+          const latRound = Math.round(lat);
+          const lngRound = Math.round(lng);
+          const latMax = latRound + 2;
+          const lngMax = lngRound + 2;
+          const latMin = latRound - 2;
+          const lngMin = lngRound - 2;
+
+          if (thisLatRound <= latMax && thisLatRound >= latMin
+            && thisLngRound <= lngMax && thisLngRound >= lngMin) {
+            resolve(thisCity);
+            return;
+          }
+        });
+
+        resolve('');
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(() => {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
 function findCityByCoordinates(lat, lng) {
   const promiseObj = new Promise((resolve, reject) => {
     const dbRefObject = firebase.database().ref();
@@ -275,6 +311,88 @@ function findCountryByCoordinates(lat, lng) {
   return promiseObj;
 }
 
+function getAllPlaces() {
+  const promiseObj = new Promise((resolve, reject) => {
+    const dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', (snap) => {
+      if (snap.val()) {
+        const valueSnap = snap.val();
+        const arr = [];
+
+        Object.keys(valueSnap).forEach((key) => {
+          const thisPlace = valueSnap[key];
+
+          arr.push(thisPlace);
+        });
+
+        resolve(arr);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(() => {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
+function getAllCities() {
+  const promiseObj = new Promise((resolve, reject) => {
+    const dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', (snap) => {
+      if (snap.val()) {
+        const valueSnap = snap.val();
+        const arr = [];
+
+        Object.keys(valueSnap).forEach((key) => {
+          const thisCity = valueSnap[key];
+
+          if (thisCity.city_id) {
+            arr.push(thisCity);
+          }
+        });
+
+        resolve(arr);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(() => {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
+function getAllCountries() {
+  const promiseObj = new Promise((resolve, reject) => {
+    const dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', (snap) => {
+      if (snap.val()) {
+        const valueSnap = snap.val();
+        const arr = [];
+
+        Object.keys(valueSnap).forEach((key) => {
+          const thisCountry = valueSnap[key];
+
+          if (thisCountry.country_id) {
+            arr.push(thisCountry);
+          }
+        });
+
+        resolve(arr);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(() => {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
 export {
   saveCityData,
   saveCountryData,
@@ -282,6 +400,10 @@ export {
   updateCountryData,
   deleteCityData,
   deleteCountryData,
+  findPlaceByCoordinates,
   findCityByCoordinates,
   findCountryByCoordinates,
+  getAllPlaces,
+  getAllCities,
+  getAllCountries,
 };
