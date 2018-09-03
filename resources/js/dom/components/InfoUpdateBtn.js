@@ -89,11 +89,7 @@ export default class extends Component {
 
   Markup() {
     return `
-      <a href="#" class="btn btn--safe">
-        <svg role="img" class="icon">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-iconmonstr-check-mark-10"></use>
-        </svg>
-      </a>
+      <a href="#" class="btn btn--active">Save</a>
     `;
   }
 
