@@ -108,7 +108,11 @@
   }
 
   &--display {
-    height: 150px;
+    height: 200px;
+
+    @include desktop {
+      height: 180px;
+    }
 
     .info__body {
       height: 100%;
@@ -120,47 +124,87 @@
     }
 
     .part {
+      margin-bottom: 10px;
+
       @include desktop {
+        align-items: center;
         display: inline-flex;
+        flex: 1;
         flex-direction: column;
         height: 100%;
         justify-content: center;
+        margin-bottom: 0;
         width: 33.333%;
       }
     }
 
     .place-title {
-      font-size: 1.6rem;
+      font-size: 2rem;
 
       @include desktop {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
     }
 
     .city-is-capital {
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 400;
 
       @include desktop {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
       }
     }
 
     .city-country-code {
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 600;
 
       @include desktop {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
       }
     }
 
     .country-code {
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 400;
 
       @include desktop {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+      }
+    }
+
+    .time-group {
+      .time {
+        font-size: 2.2rem;
+
+        @include desktop {
+          font-size: 2.4rem;
+        }
+      }
+
+      .a {
+        font-size: 1.3rem;
+        font-weight: 600;
+
+        @include desktop {
+          font-size: 1.5rem;
+        }
+      }
+
+      .day {
+        font-size: 1rem;
+
+        @include desktop {
+          font-size: 1.2rem;
+        }
+      }
+
+      .timezone {
+        font-size: 1rem;
+
+        @include desktop {
+          font-size: 1.2rem;
+        }
       }
     }
   }

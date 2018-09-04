@@ -1,4 +1,5 @@
 import { Component } from 'domr-framework';
+import DateTime from 'luxon/src/datetime';
 import Close from './InfoCloseBtn';
 
 function cityData(city) {
@@ -13,10 +14,8 @@ function cityData(city) {
         <span class="city-country-code">${city.country_code}</span>
       </div>
       <div class="part part--timezone">
-        Timezone
       </div>
       <div class="part part--area">
-        Area
       </div>
     </div>
   `;
@@ -52,6 +51,12 @@ export default class extends Component {
     const placeToselect = type === 'city' ? info[0] : info[1];
     const place = placeToselect(data);
 
+    if (data.timezone && data.timezone !== '') {
+      const timeToUpdate = DateTime.utc().setZone(`UTC${data.timezone}`).toFormat('hh:mm:ssa dd MMM');
+
+      console.log(timeToUpdate);
+    }
+
     return `
       <div class="info info--display">
         <div class="container">
@@ -60,5 +65,37 @@ export default class extends Component {
         </div>
       </div>
     `;
+  }
+
+  AfterRenderDone() {
+    const data = this.data;
+    const type = this.type;
+    const thisSelf = this.GetThisComponent();
+
+    if (type === 'city' && data.timezone !== '') {
+      function step() {
+        const timeToUpdate = DateTime.utc().setZone(`UTC${data.timezone}`).toFormat('h:mm_a_MMMM d');
+        const splitTime = timeToUpdate.split('_');
+
+        if (thisSelf && thisSelf.querySelector('.part--timezone')) {
+          const timezoneDom = thisSelf.querySelector('.part--timezone');
+          timezoneDom.innerHTML = `
+            <div class="time-group">
+              <span class="time">${splitTime[0]}</span>
+              <span class="a">${splitTime[1]}</span>
+            </div>
+            <div class="time-group">
+              <span class="day">${splitTime[2]}</span>
+            </div>
+            <div class="time-group">
+              <span class="timezone">GMT ${data.timezone}</span>
+            </div>
+          `;
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
   }
 }
