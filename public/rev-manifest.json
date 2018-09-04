@@ -1,11 +1,6 @@
 {
   "app": {
-<<<<<<< HEAD
     "js": "public/app.654bca30c26a68940ac0.js",
     "css": "public/app.fcc1f0ecbb2351f6654604de1c9fdd0d.css"
-=======
-    "js": "public/app.5e128792bf09876a3317.js",
-    "css": "public/app.38238fdb7a78907dbca6b96b89610ef4.css"
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   }
 }
