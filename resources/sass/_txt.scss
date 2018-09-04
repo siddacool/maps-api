@@ -53,7 +53,7 @@
   &--red {
     input,
     select {
-      border-bottom-color: red;
+      border-bottom-color: $ui-danger;
     }
   }
 }
