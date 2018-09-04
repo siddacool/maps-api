@@ -23,4 +23,13 @@
     width: 100vw;
     z-index: 400;
   }
+
+  .public-api {
+    display: block;
+    margin: 0;
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 1000;
+  }
 }

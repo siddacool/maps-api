@@ -11,6 +11,7 @@ export default class extends Component {
 
     return `
       <div class="home home--public">
+        <a href="https://sid-maps-api.firebaseapp.com/mapdata" target="_blank" id="public-page-api" class="public-api btn btn--active">API</a>
         ${mapPublic.Render()}
       </div>
     `;
