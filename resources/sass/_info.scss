@@ -108,6 +108,7 @@
   }
 
   &--display {
+    font-family: $heading-font;
     height: 200px;
 
     @include desktop {
@@ -140,6 +141,7 @@
 
     .place-title {
       font-size: 2rem;
+      font-weight: 600;
 
       @include desktop {
         font-size: 2.2rem;
@@ -157,7 +159,6 @@
 
     .city-country-code {
       font-size: 1.2rem;
-      font-weight: 600;
 
       @include desktop {
         font-size: 1.4rem;
@@ -176,6 +177,7 @@
     .time-group {
       .time {
         font-size: 2.2rem;
+        font-weight: 600;
 
         @include desktop {
           font-size: 2.4rem;
@@ -204,6 +206,42 @@
 
         @include desktop {
           font-size: 1.2rem;
+        }
+      }
+    }
+
+    .area-group {
+      .title {
+        font-size: 1.3rem;
+
+        @include desktop {
+          font-size: 1.5rem;
+        }
+      }
+
+      .area {
+        font-size: 2.2rem;
+        font-weight: 600;
+
+        @include desktop {
+          font-size: 2.4rem;
+        }
+      }
+
+      .skm {
+        font-size: 1.3rem;
+        font-weight: 600;
+        position: relative;
+
+        @include desktop {
+          font-size: 1.4rem;
+        }
+
+        &::after {
+          content: '2';
+          font-size: 1rem;
+          position: absolute;
+          top: -2px;
         }
       }
     }

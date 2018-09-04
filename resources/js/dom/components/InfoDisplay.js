@@ -16,6 +16,24 @@ function cityData(city) {
       <div class="part part--timezone">
       </div>
       <div class="part part--area">
+        <div class="area-group">
+          <span class="title">Area</span>
+        </div>
+      ${
+        city.area && city.area !== 0 ?
+        `
+          <div class="area-group">
+            <span class="area">${city.area}</span>
+            <span class="skm">km</span>
+          </div>
+        `
+        :
+        `
+          <div class="area-group">
+            <span class="area">-</span>
+          </div>
+        `
+      }
       </div>
     </div>
   `;
