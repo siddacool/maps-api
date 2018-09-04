@@ -33,17 +33,14 @@
     padding-top: .8rem;
 
     &__title {
-      font-size: 16px;
-      font-weight: 500;
+      font-family: $heading-font;
+      font-size: 1.2rem;
+      font-weight: 600;
       letter-spacing: .4px;
       margin-bottom: 12px;
       text-transform: capitalize;
       width: 100%;
     }
-  }
-
-  .btn {
-    padding-top: 0;
   }
 
   .close-btn {
@@ -83,7 +80,8 @@
 
     label,
     .fixed-fields {
-      margin-bottom: 30px;
+      font-size: 1.2rem;
+      margin-bottom: 36px;
       width: 100%;
 
       @include desktop {
@@ -92,6 +90,14 @@
         margin-right: 10px;
         width: calc(25% - 20px);
       }
+    }
+
+    input {
+      font-size: 1.2rem;
+    }
+
+    select {
+      font-size: 1.2rem;
     }
 
     .checkbox {
