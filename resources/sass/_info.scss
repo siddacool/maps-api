@@ -33,17 +33,14 @@
     padding-top: .8rem;
 
     &__title {
-      font-size: 16px;
-      font-weight: 500;
+      font-family: $heading-font;
+      font-size: 1.2rem;
+      font-weight: 600;
       letter-spacing: .4px;
       margin-bottom: 12px;
       text-transform: capitalize;
       width: 100%;
     }
-  }
-
-  .btn {
-    padding-top: 0;
   }
 
   .close-btn {
@@ -57,7 +54,7 @@
     width: 40px;
 
     svg {
-      fill: red;
+      fill: $ui-danger;
       height: 1.2rem;
       width: 1.2rem;
     }
@@ -83,7 +80,8 @@
 
     label,
     .fixed-fields {
-      margin-bottom: 30px;
+      font-size: 1.2rem;
+      margin-bottom: 36px;
       width: 100%;
 
       @include desktop {
@@ -94,10 +92,162 @@
       }
     }
 
+    input {
+      font-size: 1.2rem;
+    }
+
+    select {
+      font-size: 1.2rem;
+    }
+
     .checkbox {
       align-items: flex-end;
       align-self: flex-end;
       display: flex;
+    }
+  }
+
+  &--display {
+    font-family: $heading-font;
+
+    @include desktop {
+      height: 180px;
+    }
+
+    .info__body {
+      height: 100%;
+
+      @include desktop {
+        align-items: center;
+        display: flex;
+      }
+    }
+
+    .part {
+      margin-bottom: 10px;
+
+      @include desktop {
+        align-items: center;
+        display: inline-flex;
+        flex: 1;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
+        margin-bottom: 0;
+        width: 33.333%;
+      }
+    }
+
+    .place-title {
+      color: $ui-primary;
+      font-size: 2rem;
+      font-weight: 600;
+
+      @include desktop {
+        font-size: 2.2rem;
+      }
+    }
+
+    .city-is-capital {
+      font-size: 1.2rem;
+      font-weight: 400;
+
+      @include desktop {
+        font-size: 1.4rem;
+      }
+    }
+
+    .city-country-code {
+      font-size: 1.2rem;
+
+      @include desktop {
+        font-size: 1.4rem;
+      }
+    }
+
+    .country-code {
+      font-size: 1.2rem;
+      font-weight: 400;
+
+      @include desktop {
+        font-size: 1.4rem;
+      }
+    }
+
+    .time-group {
+      .time {
+        color: $ui-primary;
+        font-size: 2.2rem;
+        font-weight: 600;
+
+        @include desktop {
+          font-size: 2.4rem;
+        }
+      }
+
+      .a {
+        font-size: 1.3rem;
+        font-weight: 600;
+
+        @include desktop {
+          font-size: 1.5rem;
+        }
+      }
+
+      .day {
+        font-size: 1rem;
+
+        @include desktop {
+          font-size: 1.2rem;
+        }
+      }
+
+      .timezone {
+        font-size: 1rem;
+
+        @include desktop {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .area-group {
+      .title {
+        border-bottom: 3px solid $ui-grey;
+        font-size: 1.3rem;
+        font-weight: 600;
+
+        @include desktop {
+          font-size: 1.5rem;
+        }
+      }
+
+      .area {
+        color: $ui-primary;
+        font-size: 2.2rem;
+        font-weight: 600;
+
+        @include desktop {
+          font-size: 2.4rem;
+        }
+      }
+
+      .skm {
+        font-size: 1.3rem;
+        font-weight: 600;
+        position: relative;
+
+        @include desktop {
+          font-size: 1.4rem;
+        }
+
+        &::after {
+          content: '2';
+          font-size: 1rem;
+          position: absolute;
+          top: -2px;
+        }
+      }
     }
   }
 }

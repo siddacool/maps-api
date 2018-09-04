@@ -4,45 +4,45 @@
   border: 1px solid #dadada;
   border-radius: 20px;
   display: inline-flex;
+  font-family: $heading-font;
   font-weight: 600;
   height: 30px;
   justify-content: center;
   letter-spacing: .5px;
+  line-height: 1.8;
   margin-right: 10px;
   min-width: 52px;
-  padding-bottom: 2px;
   padding-left: 12px;
   padding-right: 12px;
-  padding-top: 2px;
   text-transform: capitalize;
 
   &--active {
-    background-color: #5d50ff;
-    border-color: #5d50ff;
-    color: #fff;
+    background-color: $ui-primary;
+    border-color: $ui-primary;
+    color: $ui-white;
 
     svg {
-      fill: #fff;
+      fill: $ui-white;
     }
   }
 
   &--danger {
-    background-color: #ececec;
-    border-color: #ececec;
-    color: red;
+    background-color: $ui-grey;
+    border-color: $ui-grey;
+    color: $ui-danger;
 
     svg {
-      fill: red;
+      fill: $ui-danger;
     }
   }
 
   &--safe {
-    background-color: #ececec;
-    border-color: #ececec;
-    color: #1db34b;
+    background-color: $ui-grey;
+    border-color: $ui-grey;
+    color: $ui-safe;
 
     svg {
-      fill: #1db34b;
+      fill: $ui-safe;
     }
   }
 }
