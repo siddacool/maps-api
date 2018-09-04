@@ -3,9 +3,8 @@ import LogoutBtn from '../components/LogoutBtn';
 import MapAdmin from '../components/MapAdmin';
 
 export default class extends Component {
-  constructor(l) {
+  constructor() {
     super();
-    this.l = l;
   }
 
   Markup() {
