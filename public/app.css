@@ -85,6 +85,10 @@ label svg {
 }
 
 .txt select {
+<<<<<<< HEAD
+=======
+  padding-bottom: 4px;
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   padding-left: 0;
 }
 
@@ -139,17 +143,29 @@ label svg {
   border-radius: 20px;
   display: -webkit-inline-flex;
   display: inline-flex;
+<<<<<<< HEAD
   font-family: "Poppins", sans-serif;
+=======
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   font-weight: 600;
   height: 30px;
   -webkit-justify-content: center;
           justify-content: center;
   letter-spacing: .5px;
+<<<<<<< HEAD
   line-height: 1.8;
   margin-right: 10px;
   min-width: 52px;
   padding-left: 12px;
   padding-right: 12px;
+=======
+  margin-right: 10px;
+  min-width: 52px;
+  padding-bottom: 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 2px;
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   text-transform: capitalize;
 }
 
@@ -187,6 +203,10 @@ label svg {
   border-bottom: 2px solid #000;
   display: -webkit-flex;
   display: flex;
+<<<<<<< HEAD
+=======
+  height: 28.99px;
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
 }
 
 .fixed-fields b {
@@ -203,7 +223,10 @@ label svg {
 
 .home .admin-logout {
   display: block;
+<<<<<<< HEAD
   margin: 0;
+=======
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   position: fixed;
   right: 1rem;
   top: 1rem;
@@ -222,6 +245,7 @@ label svg {
   z-index: 400;
 }
 
+<<<<<<< HEAD
 .home .public-api {
   display: block;
   margin: 0;
@@ -231,6 +255,8 @@ label svg {
   z-index: 1000;
 }
 
+=======
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
 .info {
   border-radius: 6px 6px 0 0;
   bottom: 0;
@@ -273,15 +299,27 @@ label svg {
 }
 
 .info__head__title {
+<<<<<<< HEAD
   font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
+=======
+  font-size: 16px;
+  font-weight: 500;
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   letter-spacing: .4px;
   margin-bottom: 12px;
   text-transform: capitalize;
   width: 100%;
 }
 
+<<<<<<< HEAD
+=======
+.info .btn {
+  padding-top: 0;
+}
+
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
 .info .close-btn {
   -webkit-align-items: center;
           align-items: center;
@@ -325,8 +363,12 @@ label svg {
 
 .info__form label,
 .info__form .fixed-fields {
+<<<<<<< HEAD
   font-size: 1.2rem;
   margin-bottom: 36px;
+=======
+  margin-bottom: 30px;
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   width: 100%;
 }
 
@@ -340,6 +382,7 @@ label svg {
   }
 }
 
+<<<<<<< HEAD
 .info__form input {
   font-size: 1.2rem;
 }
@@ -348,6 +391,8 @@ label svg {
   font-size: 1.2rem;
 }
 
+=======
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
 .info__form .checkbox {
   -webkit-align-items: flex-end;
           align-items: flex-end;
@@ -356,6 +401,7 @@ label svg {
   display: -webkit-flex;
   display: flex;
 }
+<<<<<<< HEAD
 
 .info--display {
   font-family: "Poppins", sans-serif;
@@ -531,3 +577,5 @@ label svg {
   position: absolute;
   top: -2px;
 }
+=======
+>>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
