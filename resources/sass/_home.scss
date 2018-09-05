@@ -1,6 +1,8 @@
 .home {
-  &--admin {
-    
+  &--login {
+    #mapid {
+      filter: blur(5px);
+    }
   }
 
   .admin-logout {
