@@ -85,10 +85,6 @@ label svg {
 }
 
 .txt select {
-<<<<<<< HEAD
-=======
-  padding-bottom: 4px;
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   padding-left: 0;
 }
 
@@ -143,29 +139,17 @@ label svg {
   border-radius: 20px;
   display: -webkit-inline-flex;
   display: inline-flex;
-<<<<<<< HEAD
   font-family: "Poppins", sans-serif;
-=======
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   font-weight: 600;
   height: 30px;
   -webkit-justify-content: center;
           justify-content: center;
   letter-spacing: .5px;
-<<<<<<< HEAD
   line-height: 1.8;
   margin-right: 10px;
   min-width: 52px;
   padding-left: 12px;
   padding-right: 12px;
-=======
-  margin-right: 10px;
-  min-width: 52px;
-  padding-bottom: 2px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 2px;
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   text-transform: capitalize;
 }
 
@@ -203,10 +187,6 @@ label svg {
   border-bottom: 2px solid #000;
   display: -webkit-flex;
   display: flex;
-<<<<<<< HEAD
-=======
-  height: 28.99px;
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
 }
 
 .fixed-fields b {
@@ -223,10 +203,7 @@ label svg {
 
 .home .admin-logout {
   display: block;
-<<<<<<< HEAD
   margin: 0;
-=======
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   position: fixed;
   right: 1rem;
   top: 1rem;
@@ -245,7 +222,6 @@ label svg {
   z-index: 400;
 }
 
-<<<<<<< HEAD
 .home .public-api {
   display: block;
   margin: 0;
@@ -255,8 +231,6 @@ label svg {
   z-index: 1000;
 }
 
-=======
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
 .info {
   border-radius: 6px 6px 0 0;
   bottom: 0;
@@ -299,27 +273,15 @@ label svg {
 }
 
 .info__head__title {
-<<<<<<< HEAD
   font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
-=======
-  font-size: 16px;
-  font-weight: 500;
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   letter-spacing: .4px;
   margin-bottom: 12px;
   text-transform: capitalize;
   width: 100%;
 }
 
-<<<<<<< HEAD
-=======
-.info .btn {
-  padding-top: 0;
-}
-
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
 .info .close-btn {
   -webkit-align-items: center;
           align-items: center;
@@ -363,12 +325,8 @@ label svg {
 
 .info__form label,
 .info__form .fixed-fields {
-<<<<<<< HEAD
   font-size: 1.2rem;
   margin-bottom: 36px;
-=======
-  margin-bottom: 30px;
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
   width: 100%;
 }
 
@@ -382,7 +340,6 @@ label svg {
   }
 }
 
-<<<<<<< HEAD
 .info__form input {
   font-size: 1.2rem;
 }
@@ -391,8 +348,6 @@ label svg {
   font-size: 1.2rem;
 }
 
-=======
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
 .info__form .checkbox {
   -webkit-align-items: flex-end;
           align-items: flex-end;
@@ -401,7 +356,6 @@ label svg {
   display: -webkit-flex;
   display: flex;
 }
-<<<<<<< HEAD
 
 .info--display {
   font-family: "Poppins", sans-serif;
@@ -577,5 +531,217 @@ label svg {
   position: absolute;
   top: -2px;
 }
-=======
->>>>>>> 9a3ef6e56487c5761cc72c237b9bdcc60cff9637
+
+.api {
+  height: 100vh;
+  overflow: auto;
+}
+
+.api .api-map {
+  display: block;
+  margin: 0;
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  z-index: 1000;
+}
+
+.api .container {
+  display: block;
+  margin: 0 auto;
+  max-width: 830px;
+  padding: 0 1rem;
+}
+
+.api__heading {
+  font-family: "Poppins", sans-serif;
+  padding-top: 2rem;
+  text-align: center;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__heading {
+    padding-top: 6rem;
+  }
+}
+
+.api__heading .heading1 {
+  color: #5d50ff;
+  font-size: 2.6rem;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__heading .heading1 {
+    font-size: 2.4rem;
+  }
+}
+
+.api__heading .heading2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  left: 2px;
+  position: relative;
+  top: -16px;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__heading .heading2 {
+    font-size: 1.6rem;
+  }
+}
+
+.api__heading .image {
+  display: block;
+  margin: 20px auto;
+  width: 106px;
+}
+
+.api__heading .image img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.api__body {
+  padding-top: 2rem;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body {
+    padding-top: 4rem;
+  }
+}
+
+.api__body .topic {
+  padding-bottom: 2.5rem;
+}
+
+.api__body .topic__head {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.api__body .topic__code {
+  background-color: #ececec;
+  border-radius: 6px;
+  font-size: .9rem;
+  margin-bottom: 10px;
+  padding: .7rem;
+  white-space: pre-line;
+}
+
+.api__body .topic__desc {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.api__body .table-holder {
+  margin-top: 20px;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .table {
+    border-collapse: collapse;
+    display: table;
+    font-size: .9rem;
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .tbody {
+    display: table-row-group;
+  }
+}
+
+.api__body .tr {
+  margin-bottom: 25px;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .tr {
+    display: table-row;
+    margin-bottom: 0;
+  }
+}
+
+.api__body .th {
+  display: none;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .th {
+    border-bottom: 3px solid #ececec;
+    display: table-cell;
+    padding: 8px 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.api__body .td {
+  display: list-item;
+  margin-left: 25px;
+}
+
+.api__body .td:first-child {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 3px;
+  margin-left: 0;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .td:first-child {
+    display: table-cell;
+    font-size: .9rem;
+    margin-bottom: 0;
+  }
+}
+
+.api__body .td:nth-child(2)::before {
+  content: 'Params: ';
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .td:nth-child(2)::before {
+    display: none;
+  }
+}
+
+.api__body .td:nth-child(3)::before {
+  content: 'Returns: ';
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .td:nth-child(3)::before {
+    display: none;
+  }
+}
+
+.api__body .td:nth-child(4)::before {
+  content: 'Description: ';
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .td:nth-child(4)::before {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .api__body .td {
+    border-bottom: 3px solid #ececec;
+    display: table-cell;
+    margin-left: 0;
+    padding: 8px 10px;
+  }
+}
