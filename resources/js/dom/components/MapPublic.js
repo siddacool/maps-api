@@ -1,7 +1,9 @@
+import { GetAllPlaces, FindPlaceByCoordinates } from 'purple-maps-api';
 import { Component } from 'domr-framework';
 import * as L from 'leaflet';
-import { getAllPlaces, findPlaceByCoordinates } from '../utils/api-load-promise';
 import InfoDisplay from './InfoDisplay';
+
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function appendInfoDisplay(thisSelf, data) {
   const infoCreate = new InfoDisplay(data);
@@ -28,10 +30,20 @@ export default class extends Component {
 
   AfterRenderDone() {
     const thisSelf = this.GetThisComponent();
-    const mymap = L.map('mapid', {
-      minZoom: 2,
-      maxZoom: 6,
-    });
+    let mymap = '';
+
+    if (isMobile) {
+      mymap = L.map('mapid', {
+        minZoom: 2,
+        maxZoom: 6,
+      }).fitWorld();
+    } else {
+      mymap = L.map('mapid', {
+        minZoom: 2,
+        maxZoom: 6,
+      });
+    }
+
     const circlesLayer = L.layerGroup();
 
     mymap.setView([0, 0], 2);
@@ -44,7 +56,7 @@ export default class extends Component {
 
     marker.setOpacity(0);
 
-    getAllPlaces()
+    GetAllPlaces()
     .then((places) => {
       places.forEach((p) => {
         const thisPlace = p;
@@ -85,9 +97,9 @@ export default class extends Component {
       const lng = e.latlng.lng.toFixed(1);
 
       marker.setLatLng(e.latlng);
-      marker.setOpacity(0.9);
+      marker.setOpacity(1);
 
-      findPlaceByCoordinates(lat, lng)
+      FindPlaceByCoordinates(lat, lng)
       .then((data) => {
         if (data !== '') {
           appendInfoDisplay(thisSelf, data);
