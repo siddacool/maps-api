@@ -97,7 +97,7 @@ export default class extends Component {
       const lng = e.latlng.lng.toFixed(1);
 
       marker.setLatLng(e.latlng);
-      marker.setOpacity(0.9);
+      marker.setOpacity(1);
 
       findPlaceByCoordinates(lat, lng)
       .then((data) => {
