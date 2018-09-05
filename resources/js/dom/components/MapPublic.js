@@ -1,6 +1,6 @@
+import { getAllPlaces, findPlaceByCoordinates } from 'purple-maps-api';
 import { Component } from 'domr-framework';
 import * as L from 'leaflet';
-import { getAllPlaces, findPlaceByCoordinates } from '../utils/api-load-promise';
 import InfoDisplay from './InfoDisplay';
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
