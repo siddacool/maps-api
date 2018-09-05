@@ -9,12 +9,13 @@ export default class extends Component {
 
   Markup() {
     return `
-      <button class="btn btn--active">Login</button>
+      <a href="#" class="btn btn--active">Login</a>
     `;
   }
 
   Events() {
     this.Click((self, e) => {
+      e.preventDefault();
       const email = document.getElementById('login-page-email').value;
       const pwd = document.getElementById('login-page-pwd').value;
       const auth = firebase.auth();

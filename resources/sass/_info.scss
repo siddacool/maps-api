@@ -6,12 +6,14 @@
   left: 0;
   position: fixed;
   width: 100vw;
-  z-index: 1000;
+  z-index: 2000;
 
   @include desktop {
     height: 250px;
-    left: 1rem;
-    width: calc(100vw - 2rem);
+    left: 0;
+    margin: auto;
+    max-width: 1100px;
+    right: 0;
   }
 
   .container {
@@ -19,7 +21,6 @@
     border-radius: 6px 6px 0 0;
     height: 100%;
     margin: 0 auto;
-    max-width: 1200px;
     position: relative;
     width: 100%;
   }
