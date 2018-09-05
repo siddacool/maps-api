@@ -1,5 +1,6 @@
 import HomePageView from './views/HomePageView';
 import AdminPageView from './views/AdminPageView';
+import ApiView from './views/ApiView';
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/admin',
     view: AdminPageView,
     title: 'admin',
+  },
+  {
+    path: '/api',
+    view: ApiView,
+    title: 'api',
   },
 ];
 

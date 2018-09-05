@@ -1,4 +1,4 @@
-import { getAllPlaces, findPlaceByCoordinates } from 'purple-maps-api';
+import { GetAllPlaces, FindPlaceByCoordinates } from 'purple-maps-api';
 import { Component } from 'domr-framework';
 import * as L from 'leaflet';
 import InfoDisplay from './InfoDisplay';
@@ -56,7 +56,7 @@ export default class extends Component {
 
     marker.setOpacity(0);
 
-    getAllPlaces()
+    GetAllPlaces()
     .then((places) => {
       places.forEach((p) => {
         const thisPlace = p;
@@ -99,7 +99,7 @@ export default class extends Component {
       marker.setLatLng(e.latlng);
       marker.setOpacity(1);
 
-      findPlaceByCoordinates(lat, lng)
+      FindPlaceByCoordinates(lat, lng)
       .then((data) => {
         if (data !== '') {
           appendInfoDisplay(thisSelf, data);

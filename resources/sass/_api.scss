@@ -1,0 +1,197 @@
+.api {
+  height: 100vh;
+  overflow: auto;
+
+  .api-map {
+    display: block;
+    margin: 0;
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 1000;
+  }
+
+  .container {
+    display: block;
+    margin: 0 auto;
+    max-width: 830px;
+    padding: 0 1rem;
+  }
+
+  &__heading {
+    font-family: $heading-font;
+    padding-top: 2rem;
+    text-align: center;
+
+    @include desktop {
+      padding-top: 6rem;
+    }
+
+    .heading1 {
+      color: $ui-primary;
+      font-size: 2.6rem;
+      font-weight: 600;
+
+      @include desktop {
+        font-size: 2.4rem;
+      }
+    }
+
+    .heading2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      left: 2px;
+      position: relative;
+      top: -16px;
+
+      @include desktop {
+        font-size: 1.6rem;
+      }
+    }
+
+    .image {
+      display: block;
+      margin: 20px auto;
+      width: 106px;
+
+      img {
+        display: block;
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+
+  &__body {
+    padding-top: 2rem;
+
+    @include desktop {
+      padding-top: 4rem;
+    }
+
+    .topic {
+      padding-bottom: 2.5rem;
+
+      &__head {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      &__code {
+        background-color: $ui-grey;
+        border-radius: 6px;
+        font-size: .9rem;
+        margin-bottom: 10px;
+        padding: .7rem;
+        white-space: pre-line;
+      }
+
+      &__desc {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+    }
+
+    .table-holder {
+      margin-top: 20px;
+    }
+
+    .table {
+      @include desktop {
+        border-collapse: collapse;
+        display: table;
+        font-size: .9rem;
+        width: 100%;
+      }
+    }
+
+    .tbody {
+      @include desktop {
+        display: table-row-group;
+      }
+    }
+
+    .tr {
+      margin-bottom: 25px;
+
+      @include desktop {
+        display: table-row;
+        margin-bottom: 0;
+      }
+    }
+
+    .th {
+      display: none;
+      font-weight: 600;
+
+      @include desktop {
+        border-bottom: 3px solid $ui-grey;
+        display: table-cell;
+        padding: 8px 10px;
+        padding-bottom: 10px;
+      }
+    }
+
+    .td {
+      display: list-item;
+      margin-left: 25px;
+
+      &:first-child {
+        display: block;
+        font-size: 1.2rem;
+        margin-bottom: 3px;
+        margin-left: 0;
+
+        @include desktop {
+          display: table-cell;
+          font-size: .9rem;
+          margin-bottom: 0;
+        }
+      }
+
+      &:nth-child(2) {
+        &::before {
+          content: 'Params: ';
+          font-size: 1.1rem;
+          font-weight: 600;
+
+          @include desktop {
+            display: none;
+          }
+        }
+      }
+
+      &:nth-child(3) {
+        &::before {
+          content: 'Returns: ';
+          font-size: 1.1rem;
+          font-weight: 600;
+
+          @include desktop {
+            display: none;
+          }
+        }
+      }
+
+      &:nth-child(4) {
+        &::before {
+          content: 'Description: ';
+          font-size: 1.1rem;
+          font-weight: 600;
+
+          @include desktop {
+            display: none;
+          }
+        }
+      }
+
+      @include desktop {
+        border-bottom: 3px solid $ui-grey;
+        display: table-cell;
+        margin-left: 0;
+        padding: 8px 10px;
+      }
+    }
+  }
+}
