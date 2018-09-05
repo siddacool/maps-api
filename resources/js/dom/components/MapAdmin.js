@@ -6,6 +6,8 @@ import InfoCreate from '../components/InfoCreate';
 import InfoEdit from '../components/InfoEdit';
 import { findPlaceByCoordinates } from '../utils/firebase-db-manipulation';
 
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 function appendInfoCreate(thisSelf, lat, lng) {
   const infoCreate = new InfoCreate(lat, lng);
 
@@ -43,10 +45,19 @@ export default class extends Component {
   AfterRenderDone() {
     const thisSelf = this.GetThisComponent();
     const dbRefObject = firebase.database().ref();
-    const mymap = L.map('mapid', {
-      minZoom: 2,
-      maxZoom: 6,
-    });
+    let mymap = '';
+
+    if (isMobile) {
+      mymap = L.map('mapid', {
+        minZoom: 2,
+        maxZoom: 6,
+      }).fitWorld();
+    } else {
+      mymap = L.map('mapid', {
+        minZoom: 2,
+        maxZoom: 6,
+      });
+    }
     const circlesLayer = L.layerGroup();
 
     mymap.setView([0, 0], 2);
