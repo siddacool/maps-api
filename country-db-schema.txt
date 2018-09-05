@@ -1,0 +1,34 @@
+[
+  {
+    "name": {
+      "type": "String",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "mumbai"
+    },
+    "country_code": {
+      "type": "String",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "IND"
+    },
+    "country_id": {
+      "type": "String",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "sunset-somewhere-ffggf"
+    },
+    "lat": {
+      "type": "Number",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "13.55"
+    },
+    "lng": {
+      "type": "Number",
+      "isRequired": true,
+      "isPublic": true,
+      "value": "13.55"
+    }
+  }
+]
