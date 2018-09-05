@@ -201,6 +201,11 @@ label svg {
   min-height: 100vh;
 }
 
+.home--login #mapid {
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+}
+
 .home .admin-logout {
   display: block;
   margin: 0;
@@ -240,14 +245,16 @@ label svg {
   left: 0;
   position: fixed;
   width: 100vw;
-  z-index: 1000;
+  z-index: 2000;
 }
 
 @media only screen and (min-width: 1025px) {
   .info {
     height: 250px;
-    left: 1rem;
-    width: calc(100vw - 2rem);
+    left: 0;
+    margin: auto;
+    max-width: 1100px;
+    right: 0;
   }
 }
 
@@ -256,7 +263,6 @@ label svg {
   border-radius: 6px 6px 0 0;
   height: 100%;
   margin: 0 auto;
-  max-width: 1200px;
   position: relative;
   width: 100%;
 }
@@ -530,6 +536,56 @@ label svg {
   font-size: 1rem;
   position: absolute;
   top: -2px;
+}
+
+.login {
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 2000;
+}
+
+.login--modal {
+  border-radius: 6px 6px 0 0;
+  bottom: 0;
+  display: -webkit-flex;
+  display: flex;
+  height: 300px;
+  left: 0;
+  position: fixed;
+  width: 100vw;
+}
+
+@media only screen and (min-width: 1025px) {
+  .login--modal {
+    height: 250px;
+    left: 0;
+    margin: auto;
+    max-width: 400px;
+    right: 0;
+  }
+}
+
+.login .container {
+  background-color: #fff;
+  border-radius: 6px 6px 0 0;
+  height: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  position: relative;
+  width: 100%;
+}
+
+.login .txt {
+  margin-bottom: 31px;
+}
+
+.login .txt input {
+  font-size: 1.2rem;
+}
+
+.login button {
+  margin-top: 10px;
 }
 
 .api {

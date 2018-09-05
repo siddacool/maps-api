@@ -28158,6 +28158,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
+var _MapPublic = __webpack_require__(46);
+
+var _MapPublic2 = _interopRequireDefault(_MapPublic);
+
 var _LoginBtn = __webpack_require__(66);
 
 var _LoginBtn2 = _interopRequireDefault(_LoginBtn);
@@ -28170,9 +28174,10 @@ exports.default = class extends _domrFramework.Component {
   }
 
   Markup() {
+    var mapPublic = new _MapPublic2.default();
     var loginBtn = new _LoginBtn2.default();
 
-    return '\n      <div class="login">\n        <input id="login-page-email" type="text" placeholder="Username"/>\n        <input id="login-page-pwd" type="password" placeholder="Password"/>\n        ' + loginBtn.Render() + '\n      </div>\n    ';
+    return '\n      <div class="home home--login">\n        <div class="login">\n          <div class="login--modal">\n            <div class="container">\n              <label for="username" class="txt txt--drop">\n                <input id="login-page-email" type="text" name="username" placeholder="Username"/>\n                <span>Username</span>\n              </label>\n              <label for="username" class="txt txt--drop">\n                <input id="login-page-pwd" type="password" name="password" placeholder="Password"/>\n                <span>Password</span>\n              </label>\n              ' + loginBtn.Render() + '\n            </div>\n          </div>\n        </div>\n        ' + mapPublic.Render() + '\n      </div>\n    ';
   }
 };
 
@@ -28203,11 +28208,12 @@ exports.default = class extends _domrFramework.Component {
   }
 
   Markup() {
-    return '\n      <button class="btn btn--active">Login</button>\n    ';
+    return '\n      <a href="#" class="btn btn--active">Login</a>\n    ';
   }
 
   Events() {
     this.Click(function (self, e) {
+      e.preventDefault();
       var email = document.getElementById('login-page-email').value;
       var pwd = document.getElementById('login-page-pwd').value;
       var auth = _app2.default.auth();
