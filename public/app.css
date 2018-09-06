@@ -545,12 +545,66 @@ label svg {
   z-index: 2000;
 }
 
+.login__heading {
+  font-family: "Poppins", sans-serif;
+  left: 0;
+  margin: auto;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 100px;
+}
+
+@media only screen and (min-width: 1025px) {
+  .login__heading {
+    top: 3%;
+  }
+}
+
+.login__heading .heading1 {
+  color: #5d50ff;
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 1025px) {
+  .login__heading .heading1 {
+    font-size: 2.2rem;
+  }
+}
+
+.login__heading .heading2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  left: 2px;
+  position: relative;
+  top: -16px;
+}
+
+@media only screen and (min-width: 1025px) {
+  .login__heading .heading2 {
+    font-size: 1.4rem;
+  }
+}
+
+.login__heading .image {
+  display: block;
+  margin: 10px auto;
+  width: 53px;
+}
+
+.login__heading .image img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 .login--modal {
   border-radius: 6px 6px 0 0;
   bottom: 0;
   display: -webkit-flex;
   display: flex;
-  height: 300px;
+  height: 350px;
   left: 0;
   position: fixed;
   width: 100vw;
@@ -558,6 +612,8 @@ label svg {
 
 @media only screen and (min-width: 1025px) {
   .login--modal {
+    border-radius: 6px;
+    bottom: 50%;
     height: 250px;
     left: 0;
     margin: auto;
@@ -574,6 +630,12 @@ label svg {
   padding: 1rem;
   position: relative;
   width: 100%;
+}
+
+@media only screen and (min-width: 1025px) {
+  .login .container {
+    border-radius: 6px;
+  }
 }
 
 .login .txt {
@@ -800,4 +862,88 @@ label svg {
     margin-left: 0;
     padding: 8px 10px;
   }
+}
+
+#mapid .geosearch {
+  background-color: #fff;
+  border: 0;
+  border-radius: 6px;
+  display: -webkit-flex;
+  display: flex;
+  left: 4rem;
+  margin: 0 auto;
+  position: fixed;
+  top: 1rem;
+  width: 222px;
+}
+
+@media only screen and (min-width: 1025px) {
+  #mapid .geosearch {
+    left: 0;
+    max-width: 700px;
+    right: 0;
+    width: calc(100% - 2rem);
+  }
+}
+
+#mapid .geosearch form {
+  border-radius: 6px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  width: 100%;
+}
+
+#mapid .geosearch .leaflet-bar-part {
+  display: none;
+}
+
+#mapid .geosearch input {
+  border: 0;
+  border-radius: 6px;
+  font-size: 1rem;
+  padding: .4rem;
+  padding-right: 0;
+}
+
+@media only screen and (min-width: 1025px) {
+  #mapid .geosearch input {
+    -webkit-flex: 1;
+            flex: 1;
+    height: 35px;
+    margin-left: 5px;
+  }
+}
+
+#mapid .geosearch .reset {
+  -webkit-align-items: center;
+          align-items: center;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  display: none;
+  height: 35px;
+  -webkit-justify-content: center;
+          justify-content: center;
+  width: 35px;
+}
+
+@media only screen and (min-width: 1025px) {
+  #mapid .geosearch .reset {
+    display: -webkit-inline-flex;
+    display: inline-flex;
+  }
+}
+
+#mapid .geosearch .reset:hover {
+  background-color: #fff;
+}
+
+#mapid .geosearch .results.active {
+  width: 100%;
+}
+
+#mapid .geosearch .results > div {
+  padding: .5rem;
 }
