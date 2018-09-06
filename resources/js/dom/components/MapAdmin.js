@@ -40,6 +40,8 @@ export default class extends MapBase {
 
     const searchControl = new GeoSearchControl({
       provider,
+      showMarker: false,
+      showPopup: false,
     });
 
     mymap.addControl(searchControl);
@@ -75,24 +77,34 @@ export default class extends MapBase {
     });
 
     mymap.on('click', (e) => {
+      const geoSearch = thisSelf.querySelector('.geosearch');
+      const rect = geoSearch.getBoundingClientRect();
+      const layerPoint = e.layerPoint;
+      const left = rect.left + scrollX;
+      const top = rect.top + scrollY;
+      const bottom = rect.bottom + scrollY;
+      const right = rect.right + scrollX;
       const lat = e.latlng.lat.toFixed(1);
       const lng = e.latlng.lng.toFixed(1);
+      const isClickOnSearch = layerPoint.x > left && layerPoint.x < right && layerPoint.y > top && layerPoint.y < bottom;
 
-      marker.setLatLng(e.latlng);
-      marker.setOpacity(1);
+      if (!isClickOnSearch) {
+        marker.setLatLng(e.latlng);
+        marker.setOpacity(1);
 
-      findPlaceByCoordinates(lat, lng)
-      .then((data) => {
-        if (data === '') {
+        findPlaceByCoordinates(lat, lng)
+        .then((data) => {
+          if (data === '') {
+            appendInfoCreate(thisSelf, lat, lng);
+          } else {
+            console.log(data);
+            appendInfoEdit(thisSelf, data);
+          }
+        })
+        .catch(() => {
           appendInfoCreate(thisSelf, lat, lng);
-        } else {
-          console.log(data);
-          appendInfoEdit(thisSelf, data);
-        }
-      })
-      .catch(() => {
-        appendInfoCreate(thisSelf, lat, lng);
-      });
+        });
+      }
     });
   }
 }
