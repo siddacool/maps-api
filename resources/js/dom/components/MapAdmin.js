@@ -42,6 +42,7 @@ export default class extends MapBase {
       provider,
       showMarker: false,
       showPopup: false,
+      autoClose: true,
     });
 
     mymap.addControl(searchControl);
@@ -87,7 +88,6 @@ export default class extends MapBase {
       const lat = e.latlng.lat.toFixed(1);
       const lng = e.latlng.lng.toFixed(1);
       const isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
-
       if (!isClickOnSearch) {
         marker.setLatLng(e.latlng);
         marker.setOpacity(1);
@@ -105,6 +105,15 @@ export default class extends MapBase {
           appendInfoCreate(thisSelf, lat, lng);
         });
       }
+    });
+
+    mymap.on('geosearch/showlocation', (e) => {
+      const loaction = {
+        lat: e.location.y,
+        lng: e.location.x,
+      };
+      marker.setLatLng(loaction);
+      marker.setOpacity(1);
     });
   }
 }
