@@ -1,0 +1,75 @@
+#mapid {
+  .geosearch {
+    background-color: #fff;
+    border: 0;
+    border-radius: 6px;
+    display: flex;
+    left: 4rem;
+    margin: 0 auto;
+    position: fixed;
+    top: 1rem;
+    width: 222px;
+
+    @include desktop {
+      left: 0;
+      max-width: 700px;
+      right: 0;
+      width: calc(100% - 2rem);
+    }
+
+    form {
+      border-radius: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    // search logo
+    .leaflet-bar-part {
+      display: none;
+    }
+
+    input {
+      border: 0;
+      border-radius: 6px;
+      font-size: 1rem;
+      padding: .4rem;
+      padding-right: 0;
+
+      @include desktop {
+        flex: 1;
+        height: 35px;
+        margin-left: 5px;
+      }
+    }
+
+    .reset {
+      align-items: center;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+      height: 35px;
+      justify-content: center;
+      width: 35px;
+
+      @include desktop {
+        display: inline-flex;
+      }
+
+      &:hover {
+        background-color: #fff;
+      }
+    }
+
+    .results {
+      &.active {
+        width: 100%;
+      }
+
+      > div {
+        padding: .5rem;
+      }
+    }
+  }
+}

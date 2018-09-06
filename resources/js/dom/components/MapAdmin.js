@@ -1,12 +1,10 @@
-import firebase from 'firebase/app';
+import * as firebase from 'firebase/app';
 import 'firebase/database';
-import { Component } from 'domr-framework';
-import * as L from 'leaflet';
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+import MapBase from './MapBase';
 import InfoCreate from '../components/InfoCreate';
 import InfoEdit from '../components/InfoEdit';
 import { findPlaceByCoordinates } from '../utils/firebase-db-manipulation';
-
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function appendInfoCreate(thisSelf, lat, lng) {
   const infoCreate = new InfoCreate(lat, lng);
@@ -30,45 +28,25 @@ function appendInfoEdit(thisSelf, data) {
   }
 }
 
-export default class extends Component {
+export default class extends MapBase {
   constructor() {
     super();
   }
 
-  Markup() {
-    return `
-      <div id="mapid" style="height: 100vh">
-      </div>
-    `;
-  }
-
-  AfterRenderDone() {
-    const thisSelf = this.GetThisComponent();
+  MapArea(thisSelf, mymap, circlesLayer, marker) {
     const dbRefObject = firebase.database().ref();
-    let mymap = '';
 
-    if (isMobile) {
-      mymap = L.map('mapid', {
-        minZoom: 2,
-        maxZoom: 6,
-      }).fitWorld();
-    } else {
-      mymap = L.map('mapid', {
-        minZoom: 2,
-        maxZoom: 6,
-      });
-    }
-    const circlesLayer = L.layerGroup();
+    const provider = new OpenStreetMapProvider();
 
-    mymap.setView([0, 0], 2);
+    const searchControl = new GeoSearchControl({
+      provider,
+      showMarker: false,
+      showPopup: false,
+      autoClose: true,
+    });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(mymap);
+    mymap.addControl(searchControl);
 
-    const marker = L.marker([0, 0]).addTo(mymap);
-
-    marker.setOpacity(0);
 
     dbRefObject.on('value', (snap) => {
       if (snap.val()) {
@@ -82,25 +60,13 @@ export default class extends Component {
             const thisCity = thisPlace;
 
             circlesLayer.addLayer(
-              L.circle([thisCity.lat, thisCity.lng], {
-                color: 'blue',
-                fillColor: 'blue',
-                opacity: 1,
-                fillOpacity: 0.3,
-                radius: 70000,
-              }),
+              this.MakeCircle(thisCity.lat, thisCity.lng, 'city'),
             );
           } else if (thisPlace.country_id) {
             const thisCountry = thisPlace;
 
             circlesLayer.addLayer(
-              L.circle([thisCountry.lat, thisCountry.lng], {
-                color: 'red',
-                fillColor: 'red',
-                opacity: 1,
-                fillOpacity: 0.3,
-                radius: 70000,
-              }),
+              this.MakeCircle(thisCountry.lat, thisCountry.lng, 'country'),
             );
           }
         });
@@ -112,24 +78,42 @@ export default class extends Component {
     });
 
     mymap.on('click', (e) => {
+      const geoSearch = thisSelf.querySelector('.geosearch');
+      const rect = geoSearch.getBoundingClientRect();
+      const containerPoint = e.containerPoint;
+      const left = rect.left + scrollX;
+      const top = rect.top + scrollY;
+      const bottom = rect.bottom + scrollY;
+      const right = rect.right + scrollX;
       const lat = e.latlng.lat.toFixed(1);
       const lng = e.latlng.lng.toFixed(1);
+      const isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
+      if (!isClickOnSearch) {
+        marker.setLatLng(e.latlng);
+        marker.setOpacity(1);
 
-      marker.setLatLng(e.latlng);
-      marker.setOpacity(1);
-
-      findPlaceByCoordinates(lat, lng)
-      .then((data) => {
-        if (data === '') {
+        findPlaceByCoordinates(lat, lng)
+        .then((data) => {
+          if (data === '') {
+            appendInfoCreate(thisSelf, lat, lng);
+          } else {
+            console.log(data);
+            appendInfoEdit(thisSelf, data);
+          }
+        })
+        .catch(() => {
           appendInfoCreate(thisSelf, lat, lng);
-        } else {
-          console.log(data);
-          appendInfoEdit(thisSelf, data);
-        }
-      })
-      .catch(() => {
-        appendInfoCreate(thisSelf, lat, lng);
-      });
+        });
+      }
+    });
+
+    mymap.on('geosearch/showlocation', (e) => {
+      const loaction = {
+        lat: e.location.y,
+        lng: e.location.x,
+      };
+      marker.setLatLng(loaction);
+      marker.setOpacity(1);
     });
   }
 }
