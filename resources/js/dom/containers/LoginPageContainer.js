@@ -14,6 +14,13 @@ export default class extends Component {
     return `
       <div class="home home--login">
         <div class="login">
+          <div class="login__heading">
+            <a href="#/" class="image">
+              <img src="favicon/favicon.png" alt="Pin" />
+            </a>
+            <span class="heading1">Purple Maps</span>
+            <span class="heading2">Login</span>
+          </div>
           <div class="login--modal">
             <div class="container">
               <label for="username" class="txt txt--drop">
