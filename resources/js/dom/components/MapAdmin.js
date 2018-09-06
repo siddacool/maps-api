@@ -1,12 +1,9 @@
-import firebase from 'firebase/app';
+import * as firebase from 'firebase/app';
 import 'firebase/database';
-import { Component } from 'domr-framework';
-import * as L from 'leaflet';
+import MapBase from './MapBase';
 import InfoCreate from '../components/InfoCreate';
 import InfoEdit from '../components/InfoEdit';
 import { findPlaceByCoordinates } from '../utils/firebase-db-manipulation';
-
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function appendInfoCreate(thisSelf, lat, lng) {
   const infoCreate = new InfoCreate(lat, lng);
@@ -30,45 +27,13 @@ function appendInfoEdit(thisSelf, data) {
   }
 }
 
-export default class extends Component {
+export default class extends MapBase {
   constructor() {
     super();
   }
 
-  Markup() {
-    return `
-      <div id="mapid" style="height: 100vh">
-      </div>
-    `;
-  }
-
-  AfterRenderDone() {
-    const thisSelf = this.GetThisComponent();
+  MapArea(thisSelf, mymap, circlesLayer, marker) {
     const dbRefObject = firebase.database().ref();
-    let mymap = '';
-
-    if (isMobile) {
-      mymap = L.map('mapid', {
-        minZoom: 2,
-        maxZoom: 6,
-      }).fitWorld();
-    } else {
-      mymap = L.map('mapid', {
-        minZoom: 2,
-        maxZoom: 6,
-      });
-    }
-    const circlesLayer = L.layerGroup();
-
-    mymap.setView([0, 0], 2);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(mymap);
-
-    const marker = L.marker([0, 0]).addTo(mymap);
-
-    marker.setOpacity(0);
 
     dbRefObject.on('value', (snap) => {
       if (snap.val()) {
@@ -82,25 +47,13 @@ export default class extends Component {
             const thisCity = thisPlace;
 
             circlesLayer.addLayer(
-              L.circle([thisCity.lat, thisCity.lng], {
-                color: 'blue',
-                fillColor: 'blue',
-                opacity: 1,
-                fillOpacity: 0.3,
-                radius: 70000,
-              }),
+              this.MakeCircle(thisCity.lat, thisCity.lng, 'city'),
             );
           } else if (thisPlace.country_id) {
             const thisCountry = thisPlace;
 
             circlesLayer.addLayer(
-              L.circle([thisCountry.lat, thisCountry.lng], {
-                color: 'red',
-                fillColor: 'red',
-                opacity: 1,
-                fillOpacity: 0.3,
-                radius: 70000,
-              }),
+              this.MakeCircle(thisCountry.lat, thisCountry.lng, 'country'),
             );
           }
         });
