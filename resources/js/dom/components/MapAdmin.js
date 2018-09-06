@@ -79,14 +79,14 @@ export default class extends MapBase {
     mymap.on('click', (e) => {
       const geoSearch = thisSelf.querySelector('.geosearch');
       const rect = geoSearch.getBoundingClientRect();
-      const layerPoint = e.layerPoint;
+      const containerPoint = e.containerPoint;
       const left = rect.left + scrollX;
       const top = rect.top + scrollY;
       const bottom = rect.bottom + scrollY;
       const right = rect.right + scrollX;
       const lat = e.latlng.lat.toFixed(1);
       const lng = e.latlng.lng.toFixed(1);
-      const isClickOnSearch = layerPoint.x > left && layerPoint.x < right && layerPoint.y > top && layerPoint.y < bottom;
+      const isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
 
       if (!isClickOnSearch) {
         marker.setLatLng(e.latlng);
