@@ -1,6 +1,5 @@
 import * as firebase from 'firebase/app';
 import 'firebase/database';
-import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import MapBase from './MapBase';
 import InfoCreate from '../components/InfoCreate';
 import InfoEdit from '../components/InfoEdit';
@@ -35,18 +34,6 @@ export default class extends MapBase {
 
   MapArea(thisSelf, mymap, circlesLayer, marker) {
     const dbRefObject = firebase.database().ref();
-
-    const provider = new OpenStreetMapProvider();
-
-    const searchControl = new GeoSearchControl({
-      provider,
-      showMarker: false,
-      showPopup: false,
-      autoClose: true,
-    });
-
-    mymap.addControl(searchControl);
-
 
     dbRefObject.on('value', (snap) => {
       if (snap.val()) {
@@ -88,7 +75,6 @@ export default class extends MapBase {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
       const isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
-      console.log(e.latlng);
 
       if (!isClickOnSearch) {
         marker.setLatLng(e.latlng);

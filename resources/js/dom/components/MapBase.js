@@ -1,5 +1,6 @@
 import { Component } from 'domr-framework';
 import { Map, LayerGroup, TileLayer, Marker, Circle } from 'leaflet';
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -62,6 +63,17 @@ export default class extends Component {
     marker.addTo(mymap);
 
     marker.setOpacity(0);
+
+    const provider = new OpenStreetMapProvider();
+
+    const searchControl = new GeoSearchControl({
+      provider,
+      showMarker: false,
+      showPopup: false,
+      autoClose: true,
+    });
+
+    mymap.addControl(searchControl);
 
     this.MapArea(thisSelf, mymap, circlesLayer, marker);
   }

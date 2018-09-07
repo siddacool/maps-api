@@ -51,13 +51,44 @@ export default class extends MapBase {
     });
 
     mymap.on('click', (e) => {
+      const geoSearch = thisSelf.querySelector('.geosearch');
+      const rect = geoSearch.getBoundingClientRect();
+      const containerPoint = e.containerPoint;
+      const left = rect.left + scrollX;
+      const top = rect.top + scrollY;
+      const bottom = rect.bottom + scrollY;
+      const right = rect.right + scrollX;
       const lat = e.latlng.lat.toFixed(1);
       const lng = e.latlng.lng.toFixed(1);
+      const isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
 
-      marker.setLatLng(e.latlng);
+      if (!isClickOnSearch) {
+        marker.setLatLng(e.latlng);
+        marker.setOpacity(1);
+
+        FindPlaceByCoordinates(lat, lng)
+        .then((data) => {
+          if (data !== '') {
+            appendInfoDisplay(thisSelf, data);
+          } else {
+            clearInfoDisplay();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
+    });
+
+    mymap.on('geosearch/showlocation', (e) => {
+      const loaction = {
+        lat: e.location.y,
+        lng: e.location.x,
+      };
+      marker.setLatLng(loaction);
       marker.setOpacity(1);
 
-      FindPlaceByCoordinates(lat, lng)
+      FindPlaceByCoordinates(loaction.lat, loaction.lng)
       .then((data) => {
         if (data !== '') {
           appendInfoDisplay(thisSelf, data);
