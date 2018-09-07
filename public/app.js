@@ -30492,7 +30492,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function appendInfoCreate(thisSelf, lat, lng) {
-  var infoCreate = new _InfoCreate2.default(lat, lng);
+  var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'country';
+  var data = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
+
+  var infoCreate = new _InfoCreate2.default(lat, lng, type, data);
 
   if (document.querySelector('.info')) {
     var infoCreateCopy = document.querySelector('.info');
@@ -30559,7 +30562,7 @@ exports.default = class extends _MapBase2.default {
       var lat = e.latlng.lat;
       var lng = e.latlng.lng;
       var isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
-      console.log(e);
+
       if (!isClickOnSearch) {
         marker.setLatLng(e.latlng);
         marker.setOpacity(1);
@@ -30577,21 +30580,32 @@ exports.default = class extends _MapBase2.default {
     });
 
     mymap.on('geosearch/showlocation', function (e) {
-      var loaction = {
+      var location = {
         lat: e.location.y,
         lng: e.location.x
       };
-      marker.setLatLng(loaction);
+
+      var isCity = e.location.raw.address.city && e.location.raw.address.city !== '';
+
+      var name = isCity ? e.location.raw.address.city : e.location.raw.address.country;
+      var type = isCity ? 'city' : 'country';
+      var countryCode = e.location.raw.address.country_code.toUpperCase();
+      var dataObj = {
+        name: name,
+        country_code: countryCode
+      };
+
+      marker.setLatLng(location);
       marker.setOpacity(1);
 
-      (0, _firebaseDbManipulation.findPlaceByCoordinates)(loaction.lat, loaction.lng).then(function (data) {
+      (0, _firebaseDbManipulation.findPlaceByCoordinates)(location.lat, location.lng).then(function (data) {
         if (data === '') {
-          appendInfoCreate(thisSelf, loaction.lat, loaction.lng);
+          appendInfoCreate(thisSelf, location.lat, location.lng, type, dataObj);
         } else {
           appendInfoEdit(thisSelf, data);
         }
       }).catch(function () {
-        appendInfoCreate(thisSelf, loaction.lat, loaction.lng);
+        appendInfoCreate(thisSelf, location.lat, location.lng, type, dataObj);
       });
     });
   }
@@ -46201,22 +46215,25 @@ var Form = [_FormCity2.default, _FormCountry2.default];
 exports.default = class extends _domrFramework.Component {
   constructor(lat, lng) {
     var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'country';
+    var data = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
     super();
     this.lat = lat;
     this.lng = lng;
     this.type = type;
+    this.data = data;
   }
 
   Markup() {
     var type = this.type;
     var lat = this.lat;
     var lng = this.lng;
+    var data = this.data;
     var city = new _InfoSelectBtn2.default('city', type === 'city');
     var country = new _InfoSelectBtn2.default('country', type === 'country');
     var close = new _InfoCloseBtn2.default();
     var thisForm = type === 'city' ? Form[0] : Form[1];
-    var form = thisForm(lat, lng);
+    var form = thisForm(lat, lng, data);
     var infoSave = new _InfoSaveBtn2.default();
 
     return '\n      <div class="info info--create">\n        <div class="container">\n          ' + close.Render() + '\n          <div class="info__head" data-lat="' + lat + '" data-lng="' + lng + '">\n            <div class="info__head__title">Create Marker</div>\n            ' + city.Render() + '\n            ' + country.Render() + '\n            ' + infoSave.Render() + '\n          </div>\n          <div class="info__body">\n            ' + form + '\n          </div>\n        </div>\n      </div>\n    ';
