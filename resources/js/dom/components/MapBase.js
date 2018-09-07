@@ -24,7 +24,7 @@ export default class extends Component {
       fillColor: color,
       opacity: 1,
       fillOpacity: 0.3,
-      radius: 30000,
+      radius: type === 'city' ? 10000 : 20000,
     });
   }
 
