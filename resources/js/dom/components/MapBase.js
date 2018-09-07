@@ -39,18 +39,23 @@ export default class extends Component {
     if (isMobile) {
       mymap = new Map('mapid', {
         minZoom: 2,
-        maxZoom: 12,
+        maxZoom: 11,
+        noWrap: true,
       }).fitWorld();
+
+      mymap.setView([0, 0], 2);
     } else {
       mymap = new Map('mapid', {
         minZoom: 2,
-        maxZoom: 12,
+        maxZoom: 11,
+        noWrap: true,
       });
+
+      mymap.setView([0, 0], 2);
+      mymap.setMaxBounds(mymap.getBounds());
     }
 
     const circlesLayer = new LayerGroup();
-
-    mymap.setView([0, 0], 2);
 
     const mainTile = new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',

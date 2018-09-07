@@ -75,7 +75,7 @@ export default class extends MapBase {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
       const isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
-
+      console.log(e);
       if (!isClickOnSearch) {
         marker.setLatLng(e.latlng);
         marker.setOpacity(1);
