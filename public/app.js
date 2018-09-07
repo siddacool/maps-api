@@ -1083,10 +1083,10 @@ function findPlaceByCoordinates(lat, lng) {
           var thisLat = thisPlace.lat;
           var thisLng = thisPlace.lng;
           var total = thisLat - thisLng;
-          var latMin = +thisLat - 0.8;
-          var latMax = +thisLat + 0.8;
-          var lngMin = +thisLng - 0.8;
-          var lngMax = +thisLng + 0.8;
+          var latMin = +thisLat - 0.18;
+          var latMax = +thisLat + 0.18;
+          var lngMin = +thisLng - 0.18;
+          var lngMax = +thisLng + 0.18;
 
           thisPlace.total = total;
 
@@ -6512,7 +6512,7 @@ exports.default = class extends _domrFramework.Component {
       fillColor: color,
       opacity: 1,
       fillOpacity: 0.3,
-      radius: 30000
+      radius: type === 'city' ? 10000 : 20000
     });
   }
 
@@ -10114,10 +10114,10 @@ function FindPlaceByCoordinates(lat, lng) {
         var thisLat = thisPlace.lat;
         var thisLng = thisPlace.lng;
         var total = thisLat - thisLng;
-        var latMin = +thisLat - 0.8;
-        var latMax = +thisLat + 0.8;
-        var lngMin = +thisLng - 0.8;
-        var lngMax = +thisLng + 0.8;
+        var latMin = +thisLat - 0.18;
+        var latMax = +thisLat + 0.18;
+        var lngMin = +thisLng - 0.18;
+        var lngMax = +thisLng + 0.18;
 
         thisPlace.total = total;
 
