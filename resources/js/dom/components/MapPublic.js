@@ -28,11 +28,6 @@ export default class extends MapBase {
   MapArea(thisSelf, mymap, circlesLayer, marker) {
     mymap.locate({ setView: true, maxZoom: 6 });
 
-    mymap.on('locationfound', (e) => {
-      marker.setLatLng(e.latlng);
-      marker.setOpacity(1);
-    });
-
     GetAllPlaces()
     .then((places) => {
       places.forEach((p) => {
@@ -97,6 +92,24 @@ export default class extends MapBase {
 
       FindPlaceByCoordinates(loaction.lat, loaction.lng)
       .then((data) => {
+        if (data !== '') {
+          appendInfoDisplay(thisSelf, data);
+        } else {
+          clearInfoDisplay();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    });
+
+    mymap.on('locationfound', (e) => {
+      marker.setLatLng(e.latlng);
+      marker.setOpacity(1);
+
+      FindPlaceByCoordinates(e.latlng.lat, e.latlng.lng)
+      .then((data) => {
+        console.log(data);
         if (data !== '') {
           appendInfoDisplay(thisSelf, data);
         } else {
