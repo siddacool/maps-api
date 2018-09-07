@@ -26,6 +26,13 @@ export default class extends MapBase {
   }
 
   MapArea(thisSelf, mymap, circlesLayer, marker) {
+    mymap.locate({ setView: true, maxZoom: 6 });
+
+    mymap.on('locationfound', (e) => {
+      marker.setLatLng(e.latlng);
+      marker.setOpacity(1);
+    });
+
     GetAllPlaces()
     .then((places) => {
       places.forEach((p) => {

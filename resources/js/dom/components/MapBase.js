@@ -51,8 +51,7 @@ export default class extends Component {
         noWrap: true,
       });
 
-      mymap.setView([0, 0], 2);
-      mymap.setMaxBounds(mymap.getBounds());
+      mymap.setView([15, 20], 3);
     }
 
     const circlesLayer = new LayerGroup();
