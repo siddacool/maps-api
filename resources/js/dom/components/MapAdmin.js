@@ -5,8 +5,8 @@ import InfoCreate from '../components/InfoCreate';
 import InfoEdit from '../components/InfoEdit';
 import { findPlaceByCoordinates } from '../utils/firebase-db-manipulation';
 
-function appendInfoCreate(thisSelf, lat, lng) {
-  const infoCreate = new InfoCreate(lat, lng);
+function appendInfoCreate(thisSelf, lat, lng, type = 'country', data = {}) {
+  const infoCreate = new InfoCreate(lat, lng, type, data);
 
   if (document.querySelector('.info')) {
     const infoCreateCopy = document.querySelector('.info');
@@ -75,7 +75,7 @@ export default class extends MapBase {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
       const isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
-      console.log(e);
+
       if (!isClickOnSearch) {
         marker.setLatLng(e.latlng);
         marker.setOpacity(1);
@@ -95,23 +95,35 @@ export default class extends MapBase {
     });
 
     mymap.on('geosearch/showlocation', (e) => {
-      const loaction = {
+      const location = {
         lat: e.location.y,
         lng: e.location.x,
       };
-      marker.setLatLng(loaction);
+
+      const isCity = e.location.raw.address.city
+                     && e.location.raw.address.city !== '';
+
+      const name = isCity ? e.location.raw.address.city : e.location.raw.address.country;
+      const type = isCity ? 'city' : 'country';
+      const countryCode = e.location.raw.address.country_code.toUpperCase();
+      const dataObj = {
+        name,
+        country_code: countryCode,
+      };
+
+      marker.setLatLng(location);
       marker.setOpacity(1);
 
-      findPlaceByCoordinates(loaction.lat, loaction.lng)
+      findPlaceByCoordinates(location.lat, location.lng)
       .then((data) => {
         if (data === '') {
-          appendInfoCreate(thisSelf, loaction.lat, loaction.lng);
+          appendInfoCreate(thisSelf, location.lat, location.lng, type, dataObj);
         } else {
           appendInfoEdit(thisSelf, data);
         }
       })
       .catch(() => {
-        appendInfoCreate(thisSelf, loaction.lat, loaction.lng);
+        appendInfoCreate(thisSelf, location.lat, location.lng, type, dataObj);
       });
     });
   }
