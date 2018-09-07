@@ -203,104 +203,43 @@ function findPlaceByCoordinates(lat, lng) {
     dbRefObject.once('value', (snap) => {
       if (snap.val()) {
         const valueSnap = snap.val();
+        let toSend = '';
+        const arr = [];
+        const totalDiff = lat - lng;
 
         Object.keys(valueSnap).forEach((key) => {
-          const thisCity = valueSnap[key];
-          const thisLatRound = Math.round(thisCity.lat);
-          const thisLngRound = Math.round(thisCity.lng);
-          const latRound = Math.round(lat);
-          const lngRound = Math.round(lng);
-          const latMax = latRound + 1;
-          const lngMax = lngRound + 1;
-          const latMin = latRound - 1;
-          const lngMin = lngRound - 1;
+          const thisPlace = valueSnap[key];
+          const thisLat = thisPlace.lat;
+          const thisLng = thisPlace.lng;
+          const total = thisLat - thisLng;
+          const latMin = +thisLat - 0.8;
+          const latMax = +thisLat + 0.8;
+          const lngMin = +thisLng - 0.8;
+          const lngMax = +thisLng + 0.8;
 
-          if (thisLatRound <= latMax && thisLatRound >= latMin
-            && thisLngRound <= lngMax && thisLngRound >= lngMin) {
-            resolve(thisCity);
-            return;
+          thisPlace.total = total;
+
+          if (lat <= latMax && lat >= latMin && lng <= lngMax && lng >= lngMin) {
+            arr.push(thisPlace);
           }
         });
 
-        resolve('');
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(() => {
-      reject();
-    });
-  });
+        if (arr.length && arr.length > 0) {
+          let diff = '';
 
-  return promiseObj;
-}
+          for (let i = 0; i < arr.length; i++) {
+            const thisPlace = arr[i];
+            const total = thisPlace.total;
+            const thisDiff = totalDiff - total;
 
-function findCityByCoordinates(lat, lng) {
-  const promiseObj = new Promise((resolve, reject) => {
-    const dbRefObject = firebase.database().ref();
-    dbRefObject.once('value', (snap) => {
-      if (snap.val()) {
-        const valueSnap = snap.val();
-
-        Object.keys(valueSnap).forEach((key) => {
-          const thisCity = valueSnap[key];
-          if (thisCity.city_id) {
-            const thisLatRound = Math.round(thisCity.lat);
-            const thisLngRound = Math.round(thisCity.lng);
-            const latRound = Math.round(lat);
-            const lngRound = Math.round(lng);
-            const latMax = latRound + 1;
-            const lngMax = lngRound + 1;
-            const latMin = latRound - 1;
-            const lngMin = lngRound - 1;
-
-            if (thisLatRound <= latMax && thisLatRound >= latMin
-              && thisLngRound <= lngMax && thisLngRound >= lngMin) {
-              resolve(thisCity);
-              return;
+            if (diff === '' || diff > thisDiff) {
+              diff = thisDiff;
+              toSend = thisPlace;
             }
           }
-        });
+        }
 
-        resolve('');
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(() => {
-      reject();
-    });
-  });
-
-  return promiseObj;
-}
-
-function findCountryByCoordinates(lat, lng) {
-  const promiseObj = new Promise((resolve, reject) => {
-    const dbRefObject = firebase.database().ref();
-    dbRefObject.once('value', (snap) => {
-      if (snap.val()) {
-        const valueSnap = snap.val();
-
-        Object.keys(valueSnap).forEach((key) => {
-          const thisCountry = valueSnap[key];
-          if (thisCountry.country_id) {
-            const thisLatRound = Math.round(thisCountry.lat);
-            const thisLngRound = Math.round(thisCountry.lng);
-            const latRound = Math.round(lat);
-            const lngRound = Math.round(lng);
-            const latMax = latRound + 1;
-            const lngMax = lngRound + 1;
-            const latMin = latRound - 1;
-            const lngMin = lngRound - 1;
-
-            if (thisLatRound <= latMax && thisLatRound >= latMin
-              && thisLngRound <= lngMax && thisLngRound >= lngMin) {
-              resolve(thisCountry);
-              return;
-            }
-          }
-        });
-
-        resolve('');
+        resolve(toSend);
       } else {
         reject('NO DATA');
       }
@@ -402,8 +341,6 @@ export {
   deleteCityData,
   deleteCountryData,
   findPlaceByCoordinates,
-  findCityByCoordinates,
-  findCountryByCoordinates,
   getAllPlaces,
   getAllCities,
   getAllCountries,
