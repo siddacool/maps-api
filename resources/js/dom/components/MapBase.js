@@ -23,7 +23,7 @@ export default class extends Component {
       fillColor: color,
       opacity: 1,
       fillOpacity: 0.3,
-      radius: 70000,
+      radius: 30000,
     });
   }
 
@@ -38,12 +38,12 @@ export default class extends Component {
     if (isMobile) {
       mymap = new Map('mapid', {
         minZoom: 2,
-        maxZoom: 6,
+        maxZoom: 12,
       }).fitWorld();
     } else {
       mymap = new Map('mapid', {
         minZoom: 2,
-        maxZoom: 6,
+        maxZoom: 12,
       });
     }
 

@@ -85,9 +85,11 @@ export default class extends MapBase {
       const top = rect.top + scrollY;
       const bottom = rect.bottom + scrollY;
       const right = rect.right + scrollX;
-      const lat = e.latlng.lat.toFixed(1);
-      const lng = e.latlng.lng.toFixed(1);
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
       const isClickOnSearch = containerPoint.x > left && containerPoint.x < right && containerPoint.y > top && containerPoint.y < bottom;
+      console.log(e.latlng);
+
       if (!isClickOnSearch) {
         marker.setLatLng(e.latlng);
         marker.setOpacity(1);
@@ -97,7 +99,6 @@ export default class extends MapBase {
           if (data === '') {
             appendInfoCreate(thisSelf, lat, lng);
           } else {
-            console.log(data);
             appendInfoEdit(thisSelf, data);
           }
         })
@@ -114,6 +115,18 @@ export default class extends MapBase {
       };
       marker.setLatLng(loaction);
       marker.setOpacity(1);
+
+      findPlaceByCoordinates(loaction.lat, loaction.lng)
+      .then((data) => {
+        if (data === '') {
+          appendInfoCreate(thisSelf, loaction.lat, loaction.lng);
+        } else {
+          appendInfoEdit(thisSelf, data);
+        }
+      })
+      .catch(() => {
+        appendInfoCreate(thisSelf, loaction.lat, loaction.lng);
+      });
     });
   }
 }
