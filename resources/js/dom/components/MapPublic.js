@@ -13,6 +13,13 @@ function appendInfoDisplay(thisSelf, data) {
   }
 }
 
+function clearInfoDisplay() {
+  if (document.querySelector('.info')) {
+    const infoCreate = document.querySelector('.info');
+    infoCreate.parentElement.removeChild(infoCreate);
+  }
+}
+
 export default class extends MapBase {
   constructor() {
     super();
@@ -54,6 +61,8 @@ export default class extends MapBase {
       .then((data) => {
         if (data !== '') {
           appendInfoDisplay(thisSelf, data);
+        } else {
+          clearInfoDisplay();
         }
       })
       .catch((err) => {
