@@ -1,13 +1,18 @@
 import { Component } from 'domr-framework';
 import MapPublic from '../components/MapPublic';
 
+const config = {
+  locate: true,
+  locate_pop: true,
+};
+
 export default class extends Component {
   constructor() {
     super();
   }
 
   Markup() {
-    const mapPublic = new MapPublic();
+    const mapPublic = new MapPublic(config);
 
     return `
       <div class="home home--public">
