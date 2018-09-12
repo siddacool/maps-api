@@ -4,6 +4,7 @@ const rename = require('gulp-rename');
 const path = require('path');
 const svgstore = require('gulp-svgstore');
 const svgmin = require('gulp-svgmin');
+const del = require('del');
 const appPath = require('./dist/public/rev-manifest.json');
 
 gulp.task('html-templates', () => {
@@ -17,6 +18,16 @@ gulp.task('html-templates', () => {
     extname: '.html',
   }))
   .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('clean', () => {
+  del(['./dist/public/**.js',
+    './dist/public/**.css',
+    '!./dist/public/app.js',
+    '!./dist/public/app.css',
+    `!./dist/${appPath.app.js}`,
+    `!./dist/${appPath.app.css}`,
+  ]);
 });
 
 gulp.task('favicon', () => {

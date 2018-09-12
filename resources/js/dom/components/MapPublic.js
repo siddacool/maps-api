@@ -21,12 +21,21 @@ function clearInfoDisplay() {
 }
 
 export default class extends MapBase {
-  constructor() {
+  constructor(config = {}) {
     super();
+    this.locate = config.locate || false;
+    this.locate_pop = config.locate_pop || false;
   }
 
   MapArea(thisSelf, mymap, circlesLayer, marker) {
-    mymap.locate({ setView: true, maxZoom: 6 });
+    const isLocate = this.locate;
+    const isLocatePop = this.locate_pop;
+
+    console.log(isLocate, isLocatePop);
+
+    if (isLocate) {
+      mymap.locate({ setView: true, maxZoom: 6 });
+    }
 
     GetAllPlaces()
     .then((places) => {
@@ -107,18 +116,20 @@ export default class extends MapBase {
       marker.setLatLng(e.latlng);
       marker.setOpacity(1);
 
-      FindPlaceByCoordinates(e.latlng.lat, e.latlng.lng)
-      .then((data) => {
-        console.log(data);
-        if (data !== '') {
-          appendInfoDisplay(thisSelf, data);
-        } else {
-          clearInfoDisplay();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      if (isLocatePop) {
+        FindPlaceByCoordinates(e.latlng.lat, e.latlng.lng)
+        .then((data) => {
+          console.log(data);
+          if (data !== '') {
+            appendInfoDisplay(thisSelf, data);
+          } else {
+            clearInfoDisplay();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
     });
   }
 }

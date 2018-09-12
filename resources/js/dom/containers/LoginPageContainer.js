@@ -2,13 +2,18 @@ import { Component } from 'domr-framework';
 import MapPublic from '../components/MapPublic';
 import LoginBtn from '../components/LoginBtn';
 
+const config = {
+  locate: true,
+  locate_pop: false,
+};
+
 export default class extends Component {
   constructor() {
     super();
   }
 
   Markup() {
-    const mapPublic = new MapPublic();
+    const mapPublic = new MapPublic(config);
     const loginBtn = new LoginBtn();
 
     return `

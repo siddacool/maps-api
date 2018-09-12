@@ -5,7 +5,7 @@
   "author": "Siddhesh Mangela",
   "license": "ISC",
   "scripts": {
-    "init": "gulp svg-make && gulp alt-assets && gulp favicon && gulp html-templates",
+    "init": "gulp svg-make && gulp alt-assets && gulp favicon && gulp html-templates && gulp clean",
     "refresh": "webpack --config webpack.config.js && npm run init",
     "build": "webpack --env=prod --config webpack.config.js && npm run init",
     "start": "webpack --config webpack.config.js --watch"
@@ -20,6 +20,7 @@
     "browser-sync-webpack-plugin": "^1.1.4",
     "cli-color": "^1.2.0",
     "css-loader": "^0.28.0",
+    "del": "^3.0.0",
     "es6-promise-promise": "^1.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
