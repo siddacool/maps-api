@@ -30,7 +30,6 @@ const plugins = [
 if (buildForProduction) {
   plugins.push(new UglifyJSPlugin());
   console.log(clc.redBright.bgGreenBright('This is a Production Version'));
-  console.log(clc.red('Check env.js'));
 }
 
 module.exports = {
