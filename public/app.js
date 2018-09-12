@@ -6383,13 +6383,24 @@ function clearInfoDisplay() {
 
 exports.default = class extends _MapBase2.default {
   constructor() {
+    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     super();
+    this.locate = config.locate || false;
+    this.locate_pop = config.locate_pop || false;
   }
 
   MapArea(thisSelf, mymap, circlesLayer, marker) {
     var _this = this;
 
-    mymap.locate({ setView: true, maxZoom: 6 });
+    var isLocate = this.locate;
+    var isLocatePop = this.locate_pop;
+
+    console.log(isLocate, isLocatePop);
+
+    if (isLocate) {
+      mymap.locate({ setView: true, maxZoom: 6 });
+    }
 
     (0, _purpleMapsApi.GetAllPlaces)().then(function (places) {
       places.forEach(function (p) {
@@ -6460,16 +6471,18 @@ exports.default = class extends _MapBase2.default {
       marker.setLatLng(e.latlng);
       marker.setOpacity(1);
 
-      (0, _purpleMapsApi.FindPlaceByCoordinates)(e.latlng.lat, e.latlng.lng).then(function (data) {
-        console.log(data);
-        if (data !== '') {
-          appendInfoDisplay(thisSelf, data);
-        } else {
-          clearInfoDisplay();
-        }
-      }).catch(function (err) {
-        console.log(err);
-      });
+      if (isLocatePop) {
+        (0, _purpleMapsApi.FindPlaceByCoordinates)(e.latlng.lat, e.latlng.lng).then(function (data) {
+          console.log(data);
+          if (data !== '') {
+            appendInfoDisplay(thisSelf, data);
+          } else {
+            clearInfoDisplay();
+          }
+        }).catch(function (err) {
+          console.log(err);
+        });
+      }
     });
   }
 };
@@ -9971,13 +9984,18 @@ var _MapPublic2 = _interopRequireDefault(_MapPublic);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var config = {
+  locate: true,
+  locate_pop: true
+};
+
 exports.default = class extends _domrFramework.Component {
   constructor() {
     super();
   }
 
   Markup() {
-    var mapPublic = new _MapPublic2.default();
+    var mapPublic = new _MapPublic2.default(config);
 
     return '\n      <div class="home home--public">\n        <a href="#/api" id="public-page-api" class="public-api btn btn--active">API</a>\n        ' + mapPublic.Render() + '\n      </div>\n    ';
   }
@@ -30321,13 +30339,18 @@ var _LoginBtn2 = _interopRequireDefault(_LoginBtn);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var config = {
+  locate: true,
+  locate_pop: false
+};
+
 exports.default = class extends _domrFramework.Component {
   constructor() {
     super();
   }
 
   Markup() {
-    var mapPublic = new _MapPublic2.default();
+    var mapPublic = new _MapPublic2.default(config);
     var loginBtn = new _LoginBtn2.default();
 
     return '\n      <div class="home home--login">\n        <div class="login">\n          <div class="login__heading">\n            <a href="#/" class="image">\n              <img src="favicon/favicon.png" alt="Pin" />\n            </a>\n            <span class="heading1">Purple Maps</span>\n            <span class="heading2">Login</span>\n          </div>\n          <div class="login--modal">\n            <div class="container">\n              <label for="username" class="txt txt--drop">\n                <input id="login-page-email" type="text" name="username" placeholder="Username"/>\n                <span>Username</span>\n              </label>\n              <label for="username" class="txt txt--drop">\n                <input id="login-page-pwd" type="password" name="password" placeholder="Password"/>\n                <span>Password</span>\n              </label>\n              ' + loginBtn.Render() + '\n            </div>\n          </div>\n        </div>\n        ' + mapPublic.Render() + '\n      </div>\n    ';
