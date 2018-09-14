@@ -88,6 +88,10 @@ label svg {
   padding-left: 0;
 }
 
+.txt select[multiple] {
+  max-height: 83px;
+}
+
 .txt input:focus::-webkit-input-placeholder {
   color: transparent;
 }

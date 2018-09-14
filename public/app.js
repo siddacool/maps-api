@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "public";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 39);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,15 +75,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.utils = exports.Router = exports.Component = undefined;
 
-var _Component = __webpack_require__(40);
+var _Component = __webpack_require__(41);
 
 var _Component2 = _interopRequireDefault(_Component);
 
-var _Router = __webpack_require__(44);
+var _Router = __webpack_require__(45);
 
 var _Router2 = _interopRequireDefault(_Router);
 
-var _utils = __webpack_require__(49);
+var _utils = __webpack_require__(50);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -329,7 +329,7 @@ function timeObject(obj) {
 
 const customInspectSymbol = (() => {
   try {
-    return __webpack_require__(68).inspect.custom; // eslint-disable-line global-require
+    return __webpack_require__(69).inspect.custom; // eslint-disable-line global-require
   } catch (_err) {
     return Symbol('util.inspect.custom');
   }
@@ -367,6 +367,407 @@ module.exports = g;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getAllCountries = exports.getAllCities = exports.getAllPlaces = exports.findCountryByCountryCode = exports.findPlaceByCoordinates = exports.deleteCountryData = exports.deleteCityData = exports.updateCountryData = exports.updateCityData = exports.saveCountryData = exports.saveCityData = undefined;
+
+var _app = __webpack_require__(8);
+
+var firebase = _interopRequireWildcard(_app);
+
+__webpack_require__(38);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function saveCityData() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    var date = new Date();
+    date = Date.parse(date);
+    var cityId = 'city-' + date;
+    var name = obj.name;
+    var countryCode = obj.country_code;
+    var lat = obj.lat;
+    var lng = obj.lng;
+    var isCapital = obj.isCapital;
+    var area = obj.area;
+    var timezone = obj.timezone;
+
+    dbRefObject.push({
+      city_id: cityId,
+      name: name,
+      country_code: countryCode,
+      lat: lat,
+      lng: lng,
+      isCapital: isCapital,
+      timezone: timezone,
+      area: area
+    }).then(function () {
+      resolve();
+    }).catch(function (err) {
+      reject(err);
+    });
+  });
+  return promiseObj;
+}
+
+function saveCountryData() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    var date = new Date();
+    date = Date.parse(date);
+    var countryId = 'country-' + date;
+    var name = obj.name;
+    var countryCode = obj.country_code;
+    var lat = obj.lat;
+    var lng = obj.lng;
+    var timezone = obj.timezone || [];
+
+    dbRefObject.push({
+      country_id: countryId,
+      name: name,
+      country_code: countryCode,
+      lat: lat,
+      lng: lng,
+      timezone: timezone
+    }).then(function () {
+      resolve();
+    }).catch(function (err) {
+      reject(err);
+    });
+  });
+  return promiseObj;
+}
+
+function updateCityData(cityId) {
+  var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    var name = obj.name;
+    var countryCode = obj.country_code;
+    var lat = obj.lat;
+    var lng = obj.lng;
+    var isCapital = obj.isCapital;
+    var area = obj.area;
+    var timezone = obj.timezone;
+
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisCity = valueSnap[key];
+
+          if (thisCity.city_id === cityId) {
+            dbRefObject.child(key).update({
+              name: name,
+              country_code: countryCode,
+              lat: lat,
+              lng: lng,
+              isCapital: isCapital,
+              timezone: timezone,
+              area: area
+            });
+          }
+        });
+
+        resolve('');
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+  return promiseObj;
+}
+
+function updateCountryData(countryId) {
+  var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    var name = obj.name;
+    var countryCode = obj.country_code;
+    var lat = obj.lat;
+    var lng = obj.lng;
+    var timezone = obj.timezone || [];
+
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisCountry = valueSnap[key];
+
+          if (thisCountry.country_id === countryId) {
+            dbRefObject.child(key).update({
+              name: name,
+              country_code: countryCode,
+              lat: lat,
+              lng: lng,
+              timezone: timezone
+            });
+          }
+        });
+
+        resolve('');
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+  return promiseObj;
+}
+
+function deleteCityData(cityId) {
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisCity = valueSnap[key];
+
+          if (thisCity.city_id === cityId) {
+            dbRefObject.child(key).remove();
+            resolve();
+          }
+        });
+
+        reject('No data to delete');
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+  return promiseObj;
+}
+
+function deleteCountryData(countryId) {
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisCity = valueSnap[key];
+
+          if (thisCity.country_id === countryId) {
+            dbRefObject.child(key).remove();
+            resolve();
+          }
+        });
+
+        reject('No data to delete');
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+  return promiseObj;
+}
+
+function findPlaceByCoordinates(lat, lng) {
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+        var toSend = '';
+        var arr = [];
+        var totalDiff = lat - lng;
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisPlace = valueSnap[key];
+          var thisLat = thisPlace.lat;
+          var thisLng = thisPlace.lng;
+          var total = thisLat - thisLng;
+          var latMin = +thisLat - 0.18;
+          var latMax = +thisLat + 0.18;
+          var lngMin = +thisLng - 0.18;
+          var lngMax = +thisLng + 0.18;
+
+          thisPlace.total = total;
+
+          if (lat <= latMax && lat >= latMin && lng <= lngMax && lng >= lngMin) {
+            arr.push(thisPlace);
+          }
+        });
+
+        if (arr.length && arr.length > 0) {
+          var diff = '';
+
+          for (var i = 0; i < arr.length; i++) {
+            var thisPlace = arr[i];
+            var total = thisPlace.total;
+            var thisDiff = totalDiff - total;
+
+            if (diff === '' || diff > thisDiff) {
+              diff = thisDiff;
+              toSend = thisPlace;
+            }
+          }
+        }
+
+        resolve(toSend);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
+function findCountryByCountryCode(countryCode) {
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+        var toPush = '';
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisCountry = valueSnap[key];
+
+          if (thisCountry.country_id && thisCountry.country_code === countryCode) {
+            resolve(thisCountry);
+            return;
+          }
+        });
+
+        resolve(toPush);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
+function getAllPlaces() {
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+        var arr = [];
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisPlace = valueSnap[key];
+
+          arr.push(thisPlace);
+        });
+
+        resolve(arr);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
+function getAllCities() {
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+        var arr = [];
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisCity = valueSnap[key];
+
+          if (thisCity.city_id) {
+            arr.push(thisCity);
+          }
+        });
+
+        resolve(arr);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
+function getAllCountries() {
+  var promiseObj = new Promise(function (resolve, reject) {
+    var dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', function (snap) {
+      if (snap.val()) {
+        var valueSnap = snap.val();
+        var arr = [];
+
+        Object.keys(valueSnap).forEach(function (key) {
+          var thisCountry = valueSnap[key];
+
+          if (thisCountry.country_id) {
+            arr.push(thisCountry);
+          }
+        });
+
+        resolve(arr);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(function () {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
+exports.saveCityData = saveCityData;
+exports.saveCountryData = saveCountryData;
+exports.updateCityData = updateCityData;
+exports.updateCountryData = updateCountryData;
+exports.deleteCityData = deleteCityData;
+exports.deleteCountryData = deleteCountryData;
+exports.findPlaceByCoordinates = findPlaceByCoordinates;
+exports.findCountryByCountryCode = findCountryByCountryCode;
+exports.getAllPlaces = getAllPlaces;
+exports.getAllCities = getAllCities;
+exports.getAllCountries = getAllCountries;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -409,8 +810,8 @@ function processIncludes(includes,input) {
 }
 
 var $asyncbind = processIncludes({
-    zousan:__webpack_require__(58).toString(),
-    thenable:__webpack_require__(60).toString()
+    zousan:__webpack_require__(59).toString(),
+    thenable:__webpack_require__(61).toString()
 },
 function $asyncbind(self,catcher) {
     "use strict";
@@ -525,7 +926,7 @@ module.exports = {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -535,7 +936,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _nodentRuntime = __webpack_require__(3);
+var _nodentRuntime = __webpack_require__(4);
 
 var _nodentRuntime2 = _interopRequireDefault(_nodentRuntime);
 
@@ -588,13 +989,13 @@ var Provider = function () {
 exports.default = Provider;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__zones_localZone__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__impl_locale__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__impl_zoneUtil__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__impl_zoneUtil__ = __webpack_require__(34);
 
 
 
@@ -732,7 +1133,7 @@ class Settings {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -818,7 +1219,7 @@ class Zone {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -826,7 +1227,7 @@ class Zone {
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-__webpack_require__(78);
+__webpack_require__(79);
 var firebase = _interopDefault(__webpack_require__(23));
 
 /**
@@ -849,373 +1250,6 @@ module.exports = firebase;
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getAllCountries = exports.getAllCities = exports.getAllPlaces = exports.findPlaceByCoordinates = exports.deleteCountryData = exports.deleteCityData = exports.updateCountryData = exports.updateCityData = exports.saveCountryData = exports.saveCityData = undefined;
-
-var _app = __webpack_require__(7);
-
-var firebase = _interopRequireWildcard(_app);
-
-__webpack_require__(37);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function saveCityData() {
-  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-    var date = new Date();
-    date = Date.parse(date);
-    var cityId = 'city-' + date;
-    var name = obj.name;
-    var countryCode = obj.country_code;
-    var lat = obj.lat;
-    var lng = obj.lng;
-    var isCapital = obj.isCapital;
-    var area = obj.area;
-    var timezone = obj.timezone;
-
-    dbRefObject.push({
-      city_id: cityId,
-      name: name,
-      country_code: countryCode,
-      lat: lat,
-      lng: lng,
-      isCapital: isCapital,
-      timezone: timezone,
-      area: area
-    }).then(function () {
-      resolve();
-    }).catch(function (err) {
-      reject(err);
-    });
-  });
-  return promiseObj;
-}
-
-function saveCountryData() {
-  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-    var date = new Date();
-    date = Date.parse(date);
-    var countryId = 'country-' + date;
-    var name = obj.name;
-    var countryCode = obj.country_code;
-    var lat = obj.lat;
-    var lng = obj.lng;
-
-    dbRefObject.push({
-      country_id: countryId,
-      name: name,
-      country_code: countryCode,
-      lat: lat,
-      lng: lng
-    }).then(function () {
-      resolve();
-    }).catch(function (err) {
-      reject(err);
-    });
-  });
-  return promiseObj;
-}
-
-function updateCityData(cityId) {
-  var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-    var name = obj.name;
-    var countryCode = obj.country_code;
-    var lat = obj.lat;
-    var lng = obj.lng;
-    var isCapital = obj.isCapital;
-    var area = obj.area;
-    var timezone = obj.timezone;
-
-    dbRefObject.once('value', function (snap) {
-      if (snap.val()) {
-        var valueSnap = snap.val();
-
-        Object.keys(valueSnap).forEach(function (key) {
-          var thisCity = valueSnap[key];
-
-          if (thisCity.city_id === cityId) {
-            dbRefObject.child(key).update({
-              name: name,
-              country_code: countryCode,
-              lat: lat,
-              lng: lng,
-              isCapital: isCapital,
-              timezone: timezone,
-              area: area
-            });
-          }
-        });
-
-        resolve('');
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(function () {
-      reject();
-    });
-  });
-  return promiseObj;
-}
-
-function updateCountryData(countryId) {
-  var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-    var name = obj.name;
-    var countryCode = obj.country_code;
-    var lat = obj.lat;
-    var lng = obj.lng;
-
-    dbRefObject.once('value', function (snap) {
-      if (snap.val()) {
-        var valueSnap = snap.val();
-
-        Object.keys(valueSnap).forEach(function (key) {
-          var thisCountry = valueSnap[key];
-
-          if (thisCountry.country_id === countryId) {
-            dbRefObject.child(key).update({
-              name: name,
-              country_code: countryCode,
-              lat: lat,
-              lng: lng
-            });
-          }
-        });
-
-        resolve('');
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(function () {
-      reject();
-    });
-  });
-  return promiseObj;
-}
-
-function deleteCityData(cityId) {
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-
-    dbRefObject.once('value', function (snap) {
-      if (snap.val()) {
-        var valueSnap = snap.val();
-
-        Object.keys(valueSnap).forEach(function (key) {
-          var thisCity = valueSnap[key];
-
-          if (thisCity.city_id === cityId) {
-            dbRefObject.child(key).remove();
-            resolve();
-          }
-        });
-
-        reject('No data to delete');
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(function () {
-      reject();
-    });
-  });
-  return promiseObj;
-}
-
-function deleteCountryData(countryId) {
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-
-    dbRefObject.once('value', function (snap) {
-      if (snap.val()) {
-        var valueSnap = snap.val();
-
-        Object.keys(valueSnap).forEach(function (key) {
-          var thisCity = valueSnap[key];
-
-          if (thisCity.country_id === countryId) {
-            dbRefObject.child(key).remove();
-            resolve();
-          }
-        });
-
-        reject('No data to delete');
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(function () {
-      reject();
-    });
-  });
-  return promiseObj;
-}
-
-function findPlaceByCoordinates(lat, lng) {
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-    dbRefObject.once('value', function (snap) {
-      if (snap.val()) {
-        var valueSnap = snap.val();
-        var toSend = '';
-        var arr = [];
-        var totalDiff = lat - lng;
-
-        Object.keys(valueSnap).forEach(function (key) {
-          var thisPlace = valueSnap[key];
-          var thisLat = thisPlace.lat;
-          var thisLng = thisPlace.lng;
-          var total = thisLat - thisLng;
-          var latMin = +thisLat - 0.18;
-          var latMax = +thisLat + 0.18;
-          var lngMin = +thisLng - 0.18;
-          var lngMax = +thisLng + 0.18;
-
-          thisPlace.total = total;
-
-          if (lat <= latMax && lat >= latMin && lng <= lngMax && lng >= lngMin) {
-            arr.push(thisPlace);
-          }
-        });
-
-        if (arr.length && arr.length > 0) {
-          var diff = '';
-
-          for (var i = 0; i < arr.length; i++) {
-            var thisPlace = arr[i];
-            var total = thisPlace.total;
-            var thisDiff = totalDiff - total;
-
-            if (diff === '' || diff > thisDiff) {
-              diff = thisDiff;
-              toSend = thisPlace;
-            }
-          }
-        }
-
-        resolve(toSend);
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(function () {
-      reject();
-    });
-  });
-
-  return promiseObj;
-}
-
-function getAllPlaces() {
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-    dbRefObject.once('value', function (snap) {
-      if (snap.val()) {
-        var valueSnap = snap.val();
-        var arr = [];
-
-        Object.keys(valueSnap).forEach(function (key) {
-          var thisPlace = valueSnap[key];
-
-          arr.push(thisPlace);
-        });
-
-        resolve(arr);
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(function () {
-      reject();
-    });
-  });
-
-  return promiseObj;
-}
-
-function getAllCities() {
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-    dbRefObject.once('value', function (snap) {
-      if (snap.val()) {
-        var valueSnap = snap.val();
-        var arr = [];
-
-        Object.keys(valueSnap).forEach(function (key) {
-          var thisCity = valueSnap[key];
-
-          if (thisCity.city_id) {
-            arr.push(thisCity);
-          }
-        });
-
-        resolve(arr);
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(function () {
-      reject();
-    });
-  });
-
-  return promiseObj;
-}
-
-function getAllCountries() {
-  var promiseObj = new Promise(function (resolve, reject) {
-    var dbRefObject = firebase.database().ref();
-    dbRefObject.once('value', function (snap) {
-      if (snap.val()) {
-        var valueSnap = snap.val();
-        var arr = [];
-
-        Object.keys(valueSnap).forEach(function (key) {
-          var thisCountry = valueSnap[key];
-
-          if (thisCountry.country_id) {
-            arr.push(thisCountry);
-          }
-        });
-
-        resolve(arr);
-      } else {
-        reject('NO DATA');
-      }
-    }).catch(function () {
-      reject();
-    });
-  });
-
-  return promiseObj;
-}
-
-exports.saveCityData = saveCityData;
-exports.saveCountryData = saveCountryData;
-exports.updateCityData = updateCityData;
-exports.updateCountryData = updateCountryData;
-exports.deleteCityData = deleteCityData;
-exports.deleteCountryData = deleteCountryData;
-exports.findPlaceByCoordinates = findPlaceByCoordinates;
-exports.getAllPlaces = getAllPlaces;
-exports.getAllCities = getAllCities;
-exports.getAllCountries = getAllCountries;
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1226,11 +1260,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _hashLocationSet = __webpack_require__(47);
+var _hashLocationSet = __webpack_require__(48);
 
 var _hashLocationSet2 = _interopRequireDefault(_hashLocationSet);
 
-var _hashLocationGet = __webpack_require__(48);
+var _hashLocationGet = __webpack_require__(49);
 
 var _hashLocationGet2 = _interopRequireDefault(_hashLocationGet);
 
@@ -1534,19 +1568,19 @@ var removeClassName = exports.removeClassName = function removeClassName(element
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["friendlyDateTime"] = friendlyDateTime;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__duration__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interval__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__info__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interval__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__info__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__impl_formatter__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__zones_fixedOffsetZone__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__zones_localZone__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__impl_locale__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__impl_util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__impl_zoneUtil__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__impl_diff__ = __webpack_require__(74);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__impl_regexParser__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__impl_tokenParser__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__impl_conversions__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__impl_zoneUtil__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__impl_diff__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__impl_regexParser__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__impl_tokenParser__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__impl_conversions__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__impl_formats__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__errors__ = __webpack_require__(14);
 
@@ -3409,7 +3443,7 @@ function friendlyDateTime(dateTimeish) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__english__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__datetime__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__formatter__ = __webpack_require__(17);
 
@@ -3895,7 +3929,7 @@ class ZoneIsAbstractError extends LuxonError {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__impl_util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__zone__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__zone__ = __webpack_require__(7);
 
 
 
@@ -4023,7 +4057,7 @@ class IANAZone extends __WEBPACK_IMPORTED_MODULE_1__zone__["a" /* default */] {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__impl_util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__zone__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__zone__ = __webpack_require__(7);
 
 
 
@@ -4502,8 +4536,8 @@ class Formatter {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__impl_util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__impl_locale__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__impl_formatter__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__impl_regexParser__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__settings__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__impl_regexParser__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__settings__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__errors__ = __webpack_require__(14);
 
 
@@ -5714,7 +5748,7 @@ const DATETIME_HUGE_WITH_SECONDS = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__impl_util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__zone__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__zone__ = __webpack_require__(7);
 
 
 
@@ -5804,7 +5838,7 @@ exports.default = class extends _domrFramework.Component {
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var util = __webpack_require__(35);
+var util = __webpack_require__(36);
 
 /**
  * Copyright 2017 Google Inc.
@@ -6206,7 +6240,7 @@ exports.default = firebase;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_auth__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_auth__ = __webpack_require__(81);
 
 
 /**
@@ -6244,23 +6278,23 @@ exports.default = function (lat, lng) {
   var countryCode = new _CountrySelect2.default(data, 'country-code', 'Country Name');
   var lati = makeFixed(data, 'lat', lat);
   var lngi = makeFixed(data, 'lng', lng);
-  var timezone = makeTimezone(data);
+  var timezone = new _TimezoneSelect2.default(data, 'timezone', 'Pick a Timezone');
   var area = makeTextbox(data, 'area', 'Area');
 
-  return '\n    <div class="info__form info__form--city" data-type="city" data-id="' + (0, _iterateData2.default)(data, 'city_id') + '">\n      ' + cityName + '\n      ' + countryCode.Render() + '\n      ' + lati + '\n      ' + lngi + '\n      <div class="gap"></div>\n      ' + timezone + '\n      ' + area + '\n      <label class="checkbox">\n        <input type="checkbox" name="isCapital" value="isCapital" class="isCapital" \n          ' + ((0, _iterateData2.default)(data, 'isCapital') ? 'checked' : '') + '\n        /> Capital City\n      </label>\n    </div>\n  ';
+  return '\n    <div class="info__form info__form--city" data-type="city" data-id="' + (0, _iterateData2.default)(data, 'city_id') + '">\n      ' + cityName + '\n      ' + countryCode.Render() + '\n      ' + lati + '\n      ' + lngi + '\n      <div class="gap"></div>\n      ' + timezone.Render() + '\n      ' + area + '\n      <label class="checkbox">\n        <input type="checkbox" name="isCapital" value="isCapital" class="isCapital" \n          ' + ((0, _iterateData2.default)(data, 'isCapital') ? 'checked' : '') + '\n        /> Capital City\n      </label>\n    </div>\n  ';
 };
 
 var _iterateData = __webpack_require__(26);
 
 var _iterateData2 = _interopRequireDefault(_iterateData);
 
-var _CountrySelect = __webpack_require__(90);
+var _CountrySelect = __webpack_require__(91);
 
 var _CountrySelect2 = _interopRequireDefault(_CountrySelect);
 
-var _utcTimezones = __webpack_require__(91);
+var _TimezoneSelect = __webpack_require__(106);
 
-var _utcTimezones2 = _interopRequireDefault(_utcTimezones);
+var _TimezoneSelect2 = _interopRequireDefault(_TimezoneSelect);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6271,12 +6305,6 @@ function makeTextbox(data, name, placeholder) {
 
 function makeFixed(data, name, value) {
   return '\n    <div class="fixed-fields ' + name + '"><b>' + name + '</b><span>' + (data && data[name] ? data[name] : value) + '</span></div>\n  ';
-}
-
-function makeTimezone(data) {
-  return '\n    <label for="timezone" class="txt txt--select">\n      <select class="timezone" name="timezone" id="timezone-select">\n        <option value="" disabled selected>Pick a Timezone</option>\n        ' + _utcTimezones2.default.map(function (tz) {
-    return '\n          <option value="' + tz + '" ' + (data && data.timezone && data.timezone === tz ? 'selected' : '') + '>' + tz + '</option>\n        ';
-  }).join('') + '\n      </select>\n    </label>\n  ';
 }
 
 /***/ }),
@@ -6313,32 +6341,9 @@ exports.default = iterateData;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var utczones = ['-12:00', '-11:45', '-11:30', '-11:15', '-11:00', '-10:45', '-10:30', '-10:15', '-10:00', '-09:45', '-09:30', '-09:15', '-09:00', '-08:45', '-08:30', '-08:15', '-08:00', '-07:45', '-07:30', '-07:15', '-07:00', '-06:45', '-06:30', '-06:15', '-06:00', '-05:45', '-05:30', '-05:15', '-05:00', '-04:45', '-04:30', '-04:15', '-04:00', '-03:45', '-03:30', '-03:15', '-03:00', '-02:45', '-02:30', '-02:15', '-02:00', '-01:45', '-01:30', '-01:15', '-01:00', '+00:00', '+01:00', '+01:15', '+01:30', '+01:45', '+02:00', '+02:15', '+02:30', '+02:45', '+03:00', '+03:15', '+03:30', '+03:45', '+04:00', '+04:15', '+04:30', '+04:45', '+05:00', '+05:15', '+05:30', '+05:45', '+06:00', '+06:15', '+06:30', '+06:45', '+07:00', '+07:15', '+07:30', '+07:45', '+08:00', '+08:15', '+08:30', '+08:45', '+09:00', '+09:15', '+09:30', '+09:45', '+10:00', '+10:15', '+10:30', '+10:45', '+11:00', '+11:15', '+11:30', '+11:45', '+12:00', '+12:15', '+12:30', '+12:45', '+13:00', '+13:15', '+13:30', '+13:45', '+14:00'];
 
-exports.default = function (lat, lng) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  var countryName = makeTextbox(data, 'name', 'Country Name');
-  var countryCode = makeTextbox(data, 'country-code', 'Country Code');
-  var lati = makeFixed(data, 'lat', lat);
-  var lngi = makeFixed(data, 'lng', lng);
-
-  return '\n    <div class="info__form info__form--city" data-type="country" data-id="' + (0, _iterateData2.default)(data, 'country_id') + '">\n     ' + countryName + '\n     ' + countryCode + '\n     ' + lati + '\n     ' + lngi + '\n    </div>\n  ';
-};
-
-var _iterateData = __webpack_require__(26);
-
-var _iterateData2 = _interopRequireDefault(_iterateData);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function makeTextbox(data, name, placeholder) {
-  var modName = name.replace(/-/g, '_');
-  return '\n    <label for="' + name + '" class="txt txt--drop">\n      <input type="text" class="' + name + '" name="' + name + '" \n        placeholder="' + placeholder + '" \n        value="' + (0, _iterateData2.default)(data, modName) + '"\n      />\n      <span>' + placeholder + '</span>\n    </label>\n  ';
-}
-
-function makeFixed(data, name, value) {
-  return '\n    <div class="fixed-fields ' + name + '"><b>' + name + '</b><span>' + (data && data[name] ? data[name] : value) + '</span></div>\n  ';
-}
+exports.default = utczones;
 
 /***/ }),
 /* 28 */
@@ -6351,13 +6356,75 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _purpleMapsApi = __webpack_require__(53);
+exports.default = function (lat, lng) {
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-var _MapBase = __webpack_require__(29);
+  var countryName = makeTextbox(data, 'name', 'Country Name');
+  var countryCode = makeTextbox(data, 'country-code', 'Country Code');
+  var lati = makeFixed(data, 'lat', lat);
+  var lngi = makeFixed(data, 'lng', lng);
+  var timezones = makeTimezoneMulti(data, 'Pick a Timezone');
+
+  return '\n    <div class="info__form info__form--city" data-type="country" data-id="' + (0, _iterateData2.default)(data, 'country_id') + '">\n     ' + countryName + '\n     ' + countryCode + '\n     ' + lati + '\n     ' + lngi + '\n     ' + timezones + '\n    </div>\n  ';
+};
+
+var _utcTimezones = __webpack_require__(27);
+
+var _utcTimezones2 = _interopRequireDefault(_utcTimezones);
+
+var _iterateData = __webpack_require__(26);
+
+var _iterateData2 = _interopRequireDefault(_iterateData);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function makeTimezoneMulti(data, placeholder) {
+  var selectArr = [];
+
+  _utcTimezones2.default.forEach(function (tz) {
+    var thisTz = tz;
+    var findMatch = data && data.timezone && data.timezone.length > 0 ? data.timezone.filter(function (d) {
+      return d === thisTz;
+    }) : [];
+
+    selectArr.push({
+      timezone: thisTz,
+      isSelected: findMatch.length > 0
+    });
+  });
+
+  return '\n    <label for="timezone-multi" class="txt txt--select txt--select--multi">\n      <select class="timezone-multi" name="timezone-multi" id="timezone-select-multi" multiple>\n        <option value="" disabled>' + placeholder + '</option>\n        ' + selectArr.map(function (tz) {
+    return '\n          <option value="' + tz.timezone + '" ' + (tz.isSelected ? 'selected="selected"' : '') + '>' + tz.timezone + '</option>\n        ';
+  }).join('') + '\n      </select>\n    </label>\n  ';
+}
+
+function makeTextbox(data, name, placeholder) {
+  var modName = name.replace(/-/g, '_');
+  return '\n    <label for="' + name + '" class="txt txt--drop">\n      <input type="text" class="' + name + '" name="' + name + '" \n        placeholder="' + placeholder + '" \n        value="' + (0, _iterateData2.default)(data, modName) + '"\n      />\n      <span>' + placeholder + '</span>\n    </label>\n  ';
+}
+
+function makeFixed(data, name, value) {
+  return '\n    <div class="fixed-fields ' + name + '"><b>' + name + '</b><span>' + (data && data[name] ? data[name] : value) + '</span></div>\n  ';
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _purpleMapsApi = __webpack_require__(54);
+
+var _MapBase = __webpack_require__(30);
 
 var _MapBase2 = _interopRequireDefault(_MapBase);
 
-var _InfoDisplay = __webpack_require__(67);
+var _InfoDisplay = __webpack_require__(68);
 
 var _InfoDisplay2 = _interopRequireDefault(_InfoDisplay);
 
@@ -6488,7 +6555,7 @@ exports.default = class extends _MapBase2.default {
 };
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6500,9 +6567,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _leaflet = __webpack_require__(55);
+var _leaflet = __webpack_require__(56);
 
-var _leafletGeosearch = __webpack_require__(56);
+var _leafletGeosearch = __webpack_require__(57);
 
 var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -6585,7 +6652,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -6641,7 +6708,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(59);
+__webpack_require__(60);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -6655,7 +6722,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6665,7 +6732,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _nodentRuntime = __webpack_require__(3);
+var _nodentRuntime = __webpack_require__(4);
 
 var _nodentRuntime2 = _interopRequireDefault(_nodentRuntime);
 
@@ -6673,7 +6740,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _domUtils = __webpack_require__(11);
 
-var _constants = __webpack_require__(32);
+var _constants = __webpack_require__(33);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6801,7 +6868,7 @@ var SearchElement = function () {
 exports.default = SearchElement;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6820,16 +6887,16 @@ var ARROW_RIGHT_KEY = exports.ARROW_RIGHT_KEY = 39;
 var SPECIAL_KEYS = exports.SPECIAL_KEYS = [ENTER_KEY, ESCAPE_KEY, ARROW_DOWN_KEY, ARROW_UP_KEY, ARROW_LEFT_KEY, ARROW_RIGHT_KEY];
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = normalizeZone;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__zone__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__zone__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__zones_localZone__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__zones_IANAZone__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__zones_fixedOffsetZone__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__zones_invalidZone__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__zones_invalidZone__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util__ = __webpack_require__(1);
 /**
  * @private
@@ -6871,7 +6938,7 @@ function normalizeZone(input, defaultZone) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7173,7 +7240,7 @@ function parseSQL(s) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7181,7 +7248,7 @@ function parseSQL(s) {
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var tslib_1 = __webpack_require__(36);
+var tslib_1 = __webpack_require__(37);
 
 /**
  * Copyright 2017 Google Inc.
@@ -8960,7 +9027,7 @@ exports.stringToByteArray = stringToByteArray$1;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9165,12 +9232,12 @@ function __importDefault(mod) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_database__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_database__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__firebase_database__);
 
 
@@ -9192,18 +9259,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(39);
+__webpack_require__(40);
 
-__webpack_require__(99);
+__webpack_require__(101);
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9211,7 +9278,7 @@ __webpack_require__(99);
 
 var _domrFramework = __webpack_require__(0);
 
-var _routes = __webpack_require__(50);
+var _routes = __webpack_require__(51);
 
 var _routes2 = _interopRequireDefault(_routes);
 
@@ -9222,7 +9289,7 @@ var router = new _domrFramework.Router(_routes2.default);
 router.Start();
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9234,15 +9301,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _createElement = __webpack_require__(41);
+var _createElement = __webpack_require__(42);
 
 var _createElement2 = _interopRequireDefault(_createElement);
 
-var _lookup = __webpack_require__(42);
+var _lookup = __webpack_require__(43);
 
 var _lookup2 = _interopRequireDefault(_lookup);
 
-var _randomizer = __webpack_require__(43);
+var _randomizer = __webpack_require__(44);
 
 var _randomizer2 = _interopRequireDefault(_randomizer);
 
@@ -9464,7 +9531,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9491,7 +9558,7 @@ function createElement(str, domrDataId) {
 exports.default = createElement;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9511,7 +9578,7 @@ function Lookup(elmId) {
 exports.default = Lookup;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9529,7 +9596,7 @@ function randomizer() {
 exports.default = randomizer;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9541,7 +9608,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _addView = __webpack_require__(45);
+var _addView = __webpack_require__(46);
 
 var _addView2 = _interopRequireDefault(_addView);
 
@@ -9661,7 +9728,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9671,7 +9738,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _cloneObject = __webpack_require__(46);
+var _cloneObject = __webpack_require__(47);
 
 var _cloneObject2 = _interopRequireDefault(_cloneObject);
 
@@ -9694,7 +9761,7 @@ function addView(candidate) {
 exports.default = addView;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9733,7 +9800,7 @@ function cloneObject(obj) {
 exports.default = cloneObject;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9847,7 +9914,7 @@ function hashLocationSet(field, opt) {
 exports.default = hashLocationSet;
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9877,7 +9944,7 @@ function hashLocationGet(field) {
 exports.default = hashLocationGet;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9900,7 +9967,7 @@ var utils = {
 exports.default = utils;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9910,15 +9977,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _HomePageView = __webpack_require__(51);
+var _HomePageView = __webpack_require__(52);
 
 var _HomePageView2 = _interopRequireDefault(_HomePageView);
 
-var _AdminPageView = __webpack_require__(77);
+var _AdminPageView = __webpack_require__(78);
 
 var _AdminPageView2 = _interopRequireDefault(_AdminPageView);
 
-var _ApiView = __webpack_require__(97);
+var _ApiView = __webpack_require__(99);
 
 var _ApiView2 = _interopRequireDefault(_ApiView);
 
@@ -9942,7 +10009,7 @@ var routes = [{
 exports.default = routes;
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9959,14 +10026,14 @@ exports.default = function () {
   wrapper.innerHTML = homeContainer.Render();
 };
 
-var _PublicPageContainer = __webpack_require__(52);
+var _PublicPageContainer = __webpack_require__(53);
 
 var _PublicPageContainer2 = _interopRequireDefault(_PublicPageContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9978,7 +10045,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _MapPublic = __webpack_require__(28);
+var _MapPublic = __webpack_require__(29);
 
 var _MapPublic2 = _interopRequireDefault(_MapPublic);
 
@@ -10002,7 +10069,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10013,7 +10080,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.FindPlaceByCoordinates = exports.FindCountryByCountryCode = exports.FindCitiesByCountryCode = exports.GetAllCities = exports.GetAllCountries = exports.GetAllPlaces = undefined;
 
-var _goodOlAjaxPromise = __webpack_require__(54);
+var _goodOlAjaxPromise = __webpack_require__(55);
 
 var _goodOlAjaxPromise2 = _interopRequireDefault(_goodOlAjaxPromise);
 
@@ -10176,7 +10243,7 @@ exports.FindCountryByCountryCode = FindCountryByCountryCode;
 exports.FindPlaceByCoordinates = FindPlaceByCoordinates;
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10209,7 +10276,7 @@ function goodOlAjaxPromise(url) {
 exports.default = goodOlAjaxPromise;
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* @preserve
@@ -24085,7 +24152,7 @@ window.L = exports;
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24095,7 +24162,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _leafletControl = __webpack_require__(57);
+var _leafletControl = __webpack_require__(58);
 
 Object.defineProperty(exports, 'GeoSearchControl', {
   enumerable: true,
@@ -24104,7 +24171,7 @@ Object.defineProperty(exports, 'GeoSearchControl', {
   }
 });
 
-var _searchElement = __webpack_require__(31);
+var _searchElement = __webpack_require__(32);
 
 Object.defineProperty(exports, 'SearchElement', {
   enumerable: true,
@@ -24113,7 +24180,7 @@ Object.defineProperty(exports, 'SearchElement', {
   }
 });
 
-var _bingProvider = __webpack_require__(63);
+var _bingProvider = __webpack_require__(64);
 
 Object.defineProperty(exports, 'BingProvider', {
   enumerable: true,
@@ -24122,7 +24189,7 @@ Object.defineProperty(exports, 'BingProvider', {
   }
 });
 
-var _esriProvider = __webpack_require__(64);
+var _esriProvider = __webpack_require__(65);
 
 Object.defineProperty(exports, 'EsriProvider', {
   enumerable: true,
@@ -24131,7 +24198,7 @@ Object.defineProperty(exports, 'EsriProvider', {
   }
 });
 
-var _googleProvider = __webpack_require__(65);
+var _googleProvider = __webpack_require__(66);
 
 Object.defineProperty(exports, 'GoogleProvider', {
   enumerable: true,
@@ -24140,7 +24207,7 @@ Object.defineProperty(exports, 'GoogleProvider', {
   }
 });
 
-var _openStreetMapProvider = __webpack_require__(66);
+var _openStreetMapProvider = __webpack_require__(67);
 
 Object.defineProperty(exports, 'OpenStreetMapProvider', {
   enumerable: true,
@@ -24149,7 +24216,7 @@ Object.defineProperty(exports, 'OpenStreetMapProvider', {
   }
 });
 
-var _provider = __webpack_require__(4);
+var _provider = __webpack_require__(5);
 
 Object.defineProperty(exports, 'Provider', {
   enumerable: true,
@@ -24161,7 +24228,7 @@ Object.defineProperty(exports, 'Provider', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24171,7 +24238,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _nodentRuntime = __webpack_require__(3);
+var _nodentRuntime = __webpack_require__(4);
 
 var _nodentRuntime2 = _interopRequireDefault(_nodentRuntime);
 
@@ -24179,21 +24246,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports.default = LeafletControl;
 
-var _lodash = __webpack_require__(61);
+var _lodash = __webpack_require__(62);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _searchElement = __webpack_require__(31);
+var _searchElement = __webpack_require__(32);
 
 var _searchElement2 = _interopRequireDefault(_searchElement);
 
-var _resultList = __webpack_require__(62);
+var _resultList = __webpack_require__(63);
 
 var _resultList2 = _interopRequireDefault(_resultList);
 
 var _domUtils = __webpack_require__(11);
 
-var _constants = __webpack_require__(32);
+var _constants = __webpack_require__(33);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24601,7 +24668,7 @@ function LeafletControl() {
 }
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24759,10 +24826,10 @@ module.exports = function(tick){
     return Zousan ;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(30).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(31).setImmediate))
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -24955,7 +25022,7 @@ module.exports = function(tick){
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(10)))
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -25030,7 +25097,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -25414,7 +25481,7 @@ module.exports = debounce;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25544,7 +25611,7 @@ var _initialiseProps = function _initialiseProps() {
 exports.default = ResultList;
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25554,7 +25621,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _nodentRuntime = __webpack_require__(3);
+var _nodentRuntime = __webpack_require__(4);
 
 var _nodentRuntime2 = _interopRequireDefault(_nodentRuntime);
 
@@ -25562,7 +25629,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _provider = __webpack_require__(4);
+var _provider = __webpack_require__(5);
 
 var _provider2 = _interopRequireDefault(_provider);
 
@@ -25649,7 +25716,7 @@ var Provider = function (_BaseProvider) {
 exports.default = Provider;
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25663,7 +25730,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _provider = __webpack_require__(4);
+var _provider = __webpack_require__(5);
 
 var _provider2 = _interopRequireDefault(_provider);
 
@@ -25725,7 +25792,7 @@ var Provider = function (_BaseProvider) {
 exports.default = Provider;
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25739,7 +25806,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _provider = __webpack_require__(4);
+var _provider = __webpack_require__(5);
 
 var _provider2 = _interopRequireDefault(_provider);
 
@@ -25802,7 +25869,7 @@ var Provider = function (_BaseProvider) {
 exports.default = Provider;
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25812,7 +25879,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _nodentRuntime = __webpack_require__(3);
+var _nodentRuntime = __webpack_require__(4);
 
 var _nodentRuntime2 = _interopRequireDefault(_nodentRuntime);
 
@@ -25820,7 +25887,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _provider = __webpack_require__(4);
+var _provider = __webpack_require__(5);
 
 var _provider2 = _interopRequireDefault(_provider);
 
@@ -25928,7 +25995,7 @@ var Provider = function (_BaseProvider) {
 exports.default = Provider;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26006,7 +26073,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -26534,7 +26601,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(69);
+exports.isBuffer = __webpack_require__(70);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -26578,7 +26645,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(70);
+exports.inherits = __webpack_require__(71);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -26599,7 +26666,7 @@ function hasOwnProperty(obj, prop) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(10)))
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -26610,7 +26677,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -26639,11 +26706,11 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__zone__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__zone__ = __webpack_require__(7);
 
 
 let singleton = null;
@@ -26689,14 +26756,14 @@ class InvalidZone extends __WEBPACK_IMPORTED_MODULE_0__zone__["a" /* default */]
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__impl_util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__datetime__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__duration__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__settings__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__settings__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__errors__ = __webpack_require__(14);
 
 
@@ -27206,12 +27273,12 @@ class Interval {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__datetime__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__settings__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__settings__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__impl_locale__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__zones_IANAZone__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__impl_util__ = __webpack_require__(1);
@@ -27384,7 +27451,7 @@ class Info {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27474,7 +27541,7 @@ function highOrderDiffs(cursor, later, units) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27778,7 +27845,7 @@ function parseFromTokens(locale, input, format) {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27931,7 +27998,7 @@ function hasInvalidTimeData(obj) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27960,33 +28027,33 @@ exports.default = function () {
   });
 };
 
-var _app = __webpack_require__(7);
+var _app = __webpack_require__(8);
 
 var _app2 = _interopRequireDefault(_app);
 
 __webpack_require__(24);
 
-var _LoginPageContainer = __webpack_require__(81);
+var _LoginPageContainer = __webpack_require__(82);
 
 var _LoginPageContainer2 = _interopRequireDefault(_LoginPageContainer);
 
-var _AdminPageContainer = __webpack_require__(83);
+var _AdminPageContainer = __webpack_require__(84);
 
 var _AdminPageContainer2 = _interopRequireDefault(_AdminPageContainer);
 
-var _config = __webpack_require__(96);
+var _config = __webpack_require__(98);
 
 var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(setImmediate, global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__ = __webpack_require__(79);
+/* WEBPACK VAR INJECTION */(function(setImmediate, global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__);
 
 
@@ -29518,10 +29585,10 @@ var iterator = _wksExt.f('iterator');
  * limitations under the License.
  */
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(30).setImmediate, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(31).setImmediate, __webpack_require__(2)))
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -29993,7 +30060,7 @@ var iterator = _wksExt.f('iterator');
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30317,7 +30384,7 @@ c){a=new Wl(a);c({INTERNAL:{getUid:r(a.getUid,a),getToken:r(a.bc,a),addAuthToken
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30329,11 +30396,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _MapPublic = __webpack_require__(28);
+var _MapPublic = __webpack_require__(29);
 
 var _MapPublic2 = _interopRequireDefault(_MapPublic);
 
-var _LoginBtn = __webpack_require__(82);
+var _LoginBtn = __webpack_require__(83);
 
 var _LoginBtn2 = _interopRequireDefault(_LoginBtn);
 
@@ -30358,7 +30425,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30368,7 +30435,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _app = __webpack_require__(7);
+var _app = __webpack_require__(8);
 
 var firebase = _interopRequireWildcard(_app);
 
@@ -30406,7 +30473,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30418,11 +30485,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _LogoutBtn = __webpack_require__(84);
+var _LogoutBtn = __webpack_require__(85);
 
 var _LogoutBtn2 = _interopRequireDefault(_LogoutBtn);
 
-var _MapAdmin = __webpack_require__(85);
+var _MapAdmin = __webpack_require__(86);
 
 var _MapAdmin2 = _interopRequireDefault(_MapAdmin);
 
@@ -30442,7 +30509,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30452,7 +30519,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _app = __webpack_require__(7);
+var _app = __webpack_require__(8);
 
 var firebase = _interopRequireWildcard(_app);
 
@@ -30480,7 +30547,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30490,25 +30557,25 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _app = __webpack_require__(7);
+var _app = __webpack_require__(8);
 
 var firebase = _interopRequireWildcard(_app);
 
-__webpack_require__(37);
+__webpack_require__(38);
 
-var _MapBase = __webpack_require__(29);
+var _MapBase = __webpack_require__(30);
 
 var _MapBase2 = _interopRequireDefault(_MapBase);
 
-var _InfoCreate = __webpack_require__(88);
+var _InfoCreate = __webpack_require__(89);
 
 var _InfoCreate2 = _interopRequireDefault(_InfoCreate);
 
-var _InfoEdit = __webpack_require__(93);
+var _InfoEdit = __webpack_require__(95);
 
 var _InfoEdit2 = _interopRequireDefault(_InfoEdit);
 
-var _firebaseDbManipulation = __webpack_require__(8);
+var _firebaseDbManipulation = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30635,7 +30702,7 @@ exports.default = class extends _MapBase2.default {
 };
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30645,9 +30712,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var util = __webpack_require__(35);
-var logger = __webpack_require__(87);
-var tslib_1 = __webpack_require__(36);
+var util = __webpack_require__(36);
+var logger = __webpack_require__(88);
+var tslib_1 = __webpack_require__(37);
 var firebase = _interopDefault(__webpack_require__(23));
 
 /**
@@ -45995,7 +46062,7 @@ exports.OnDisconnect = OnDisconnect;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46199,7 +46266,7 @@ function setLogLevel(level) {
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46211,7 +46278,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _InfoSelectBtn = __webpack_require__(89);
+var _InfoSelectBtn = __webpack_require__(90);
 
 var _InfoSelectBtn2 = _interopRequireDefault(_InfoSelectBtn);
 
@@ -46223,11 +46290,11 @@ var _FormCity = __webpack_require__(25);
 
 var _FormCity2 = _interopRequireDefault(_FormCity);
 
-var _FormCountry = __webpack_require__(27);
+var _FormCountry = __webpack_require__(28);
 
 var _FormCountry2 = _interopRequireDefault(_FormCountry);
 
-var _InfoSaveBtn = __webpack_require__(92);
+var _InfoSaveBtn = __webpack_require__(94);
 
 var _InfoSaveBtn2 = _interopRequireDefault(_InfoSaveBtn);
 
@@ -46264,7 +46331,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46280,7 +46347,7 @@ var _FormCity = __webpack_require__(25);
 
 var _FormCity2 = _interopRequireDefault(_FormCity);
 
-var _FormCountry = __webpack_require__(27);
+var _FormCountry = __webpack_require__(28);
 
 var _FormCountry2 = _interopRequireDefault(_FormCountry);
 
@@ -46326,7 +46393,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46342,7 +46409,7 @@ var _iterateData = __webpack_require__(26);
 
 var _iterateData2 = _interopRequireDefault(_iterateData);
 
-var _firebaseDbManipulation = __webpack_require__(8);
+var _firebaseDbManipulation = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46385,21 +46452,9 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var utczones = ['-12:00', '-11:45', '-11:30', '-11:15', '-11:00', '-10:45', '-10:30', '-10:15', '-10:00', '-09:45', '-09:30', '-09:15', '-09:00', '-08:45', '-08:30', '-08:15', '-08:00', '-07:45', '-07:30', '-07:15', '-07:00', '-06:45', '-06:30', '-06:15', '-06:00', '-05:45', '-05:30', '-05:15', '-05:00', '-04:45', '-04:30', '-04:15', '-04:00', '-03:45', '-03:30', '-03:15', '-03:00', '-02:45', '-02:30', '-02:15', '-02:00', '-01:45', '-01:30', '-01:15', '-01:00', '+00:00', '+01:00', '+01:15', '+01:30', '+01:45', '+02:00', '+02:15', '+02:30', '+02:45', '+03:00', '+03:15', '+03:30', '+03:45', '+04:00', '+04:15', '+04:30', '+04:45', '+05:00', '+05:15', '+05:30', '+05:45', '+06:00', '+06:15', '+06:30', '+06:45', '+07:00', '+07:15', '+07:30', '+07:45', '+08:00', '+08:15', '+08:30', '+08:45', '+09:00', '+09:15', '+09:30', '+09:45', '+10:00', '+10:15', '+10:30', '+10:45', '+11:00', '+11:15', '+11:30', '+11:45', '+12:00', '+12:15', '+12:30', '+12:45', '+13:00', '+13:15', '+13:30', '+13:45', '+14:00'];
-
-exports.default = utczones;
-
-/***/ }),
-/* 92 */
+/* 92 */,
+/* 93 */,
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46411,7 +46466,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _firebaseDbManipulation = __webpack_require__(8);
+var _firebaseDbManipulation = __webpack_require__(3);
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function saveCity() {
   var insert = document.querySelector('.info');
@@ -46467,13 +46524,23 @@ function saveCountry() {
   var countryCode = countryCodeField.value;
   var lat = insert.querySelector('.lat').querySelector('span').innerText;
   var lng = insert.querySelector('.lng').querySelector('span').innerText;
+  var timezone = insert.querySelector('.timezone-multi');
+  var timezoneValue = Array.apply(undefined, _toConsumableArray(timezone.options)).reduce(function (acc, option) {
+    if (option.selected === true) {
+      acc.push(option.value);
+    }
+    return acc;
+  }, []);
+
+  console.log(timezoneValue);
 
   if (name !== '' && countryCode !== '') {
     (0, _firebaseDbManipulation.saveCountryData)({
       name: name,
       country_code: countryCode,
       lat: lat,
-      lng: lng
+      lng: lng,
+      timezone: timezoneValue
     }).then(function () {
       close.click();
     }).catch(function (err) {
@@ -46518,7 +46585,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46538,15 +46605,15 @@ var _FormCity = __webpack_require__(25);
 
 var _FormCity2 = _interopRequireDefault(_FormCity);
 
-var _FormCountry = __webpack_require__(27);
+var _FormCountry = __webpack_require__(28);
 
 var _FormCountry2 = _interopRequireDefault(_FormCountry);
 
-var _InfoUpdateBtn = __webpack_require__(94);
+var _InfoUpdateBtn = __webpack_require__(96);
 
 var _InfoUpdateBtn2 = _interopRequireDefault(_InfoUpdateBtn);
 
-var _InfoDeleteBtn = __webpack_require__(95);
+var _InfoDeleteBtn = __webpack_require__(97);
 
 var _InfoDeleteBtn2 = _interopRequireDefault(_InfoDeleteBtn);
 
@@ -46584,7 +46651,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46596,7 +46663,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _firebaseDbManipulation = __webpack_require__(8);
+var _firebaseDbManipulation = __webpack_require__(3);
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function updateCity() {
   var insert = document.querySelector('.info');
@@ -46654,13 +46723,21 @@ function updateCountry() {
   var countryCode = countryCodeField.value;
   var lat = insert.querySelector('.lat').querySelector('span').innerText;
   var lng = insert.querySelector('.lng').querySelector('span').innerText;
+  var timezone = insert.querySelector('.timezone-multi');
+  var timezoneValue = Array.apply(undefined, _toConsumableArray(timezone.options)).reduce(function (acc, option) {
+    if (option.selected === true) {
+      acc.push(option.value);
+    }
+    return acc;
+  }, []);
 
   if (name !== '' && countryCode !== '') {
     (0, _firebaseDbManipulation.updateCountryData)(countryId, {
       name: name,
       country_code: countryCode,
       lat: lat,
-      lng: lng
+      lng: lng,
+      timezone: timezoneValue
     }).then(function () {
       close.click();
     }).catch(function (err) {
@@ -46705,7 +46782,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46717,7 +46794,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _firebaseDbManipulation = __webpack_require__(8);
+var _firebaseDbManipulation = __webpack_require__(3);
 
 function deleteCity() {
   var insert = document.querySelector('.info');
@@ -46766,7 +46843,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46788,7 +46865,7 @@ var config = {
 exports.default = config;
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46805,14 +46882,14 @@ exports.default = function () {
   wrapper.innerHTML = apiPageContainer.Render();
 };
 
-var _ApiPageContainer = __webpack_require__(98);
+var _ApiPageContainer = __webpack_require__(100);
 
 var _ApiPageContainer2 = _interopRequireDefault(_ApiPageContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46870,10 +46947,74 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _domrFramework = __webpack_require__(0);
+
+var _utcTimezones = __webpack_require__(27);
+
+var _utcTimezones2 = _interopRequireDefault(_utcTimezones);
+
+var _firebaseDbManipulation = __webpack_require__(3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = class extends _domrFramework.Component {
+  constructor(obj, name, placeholder) {
+    super();
+    this.obj = obj;
+    this.name = name;
+    this.placeholder = placeholder;
+  }
+
+  Markup() {
+    var placeholder = this.placeholder;
+    var name = this.name;
+
+    return '\n      <label for="' + name + '" class="txt txt--select">\n        <select class="' + name + '" name="' + name + '" id="timezone-select">\n          <option value="" disabled selected>' + placeholder + '</option>\n        </select>\n      </label>\n    ';
+  }
+
+  AfterRenderDone() {
+    var select = document.getElementById('timezone-select');
+    var obj = this.obj;
+
+    (0, _firebaseDbManipulation.findCountryByCountryCode)(obj.country_code).then(function (findCountry) {
+      if (findCountry !== '' && findCountry.timezone && findCountry.timezone.length > 0) {
+        var timezones = findCountry.timezone;
+
+        if (timezones.length === 1) {
+          select.innerHTML += '\n            <option value="' + timezones[0] + '" selected>' + timezones[0] + '</option>\n          ';
+        } else {
+          select.innerHTML += '\n            ' + timezones.map(function (tz) {
+            return '\n              <option value="' + tz + '" ' + (obj.timezone && obj.timezone === tz ? 'selected' : '') + '>' + tz + '</option>\n            ';
+          }).join('') + '\n          ';
+        }
+      } else {
+        select.innerHTML += '\n          ' + _utcTimezones2.default.map(function (tz) {
+          return '\n            <option value="' + tz + '" ' + (obj.timezone && obj.timezone === tz ? 'selected' : '') + '>' + tz + '</option>\n          ';
+        }).join('') + '\n        ';
+      }
+    });
+  }
+};
 
 /***/ })
 /******/ ]);
