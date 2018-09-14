@@ -2,7 +2,9 @@ import utcTimezones from '../utc-timezones';
 import iterate from '../utils/iterate-data';
 
 function makeTimezoneMulti(data, placeholder) {
-  const selectArr = [];
+  let selectArr = [];
+  const startArr = [];
+  const endArr = [];
 
   utcTimezones.forEach((tz) => {
     const thisTz = tz;
@@ -15,6 +17,16 @@ function makeTimezoneMulti(data, placeholder) {
       isSelected: findMatch.length > 0,
     });
   });
+
+  selectArr.forEach((s) => {
+    if (s.isSelected) {
+      startArr.push(s);
+    } else {
+      endArr.push(s);
+    }
+  });
+
+  selectArr = startArr.concat(endArr);
 
   return `
     <label for="timezone-multi" class="txt txt--select txt--select--multi">
