@@ -36,7 +36,6 @@ export default class extends Component {
       const activeForm = SelectForm(lat, lng);
       const otherButton = parent.querySelector(`[data-id="${name === 'city' ? 'country' : 'city'}"]`);
 
-      console.log(otherButton);
       otherButton.classList.remove('btn--active');
       self.classList.add('btn--active');
 
