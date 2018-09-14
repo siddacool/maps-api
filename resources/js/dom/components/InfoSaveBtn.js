@@ -59,6 +59,15 @@ function saveCountry() {
   const countryCode = countryCodeField.value;
   const lat = insert.querySelector('.lat').querySelector('span').innerText;
   const lng = insert.querySelector('.lng').querySelector('span').innerText;
+  const timezone = insert.querySelector('.timezone-multi');
+  const timezoneValue = Array(...timezone.options).reduce((acc, option) => {
+    if (option.selected === true) {
+      acc.push(option.value);
+    }
+    return acc;
+  }, []);
+
+  console.log(timezoneValue);
 
   if (name !== '' && countryCode !== '') {
     saveCountryData({
@@ -66,6 +75,7 @@ function saveCountry() {
       country_code: countryCode,
       lat,
       lng,
+      timezone: timezoneValue,
     }).then(() => {
       close.click();
     }).catch((err) => {

@@ -61,6 +61,13 @@ function updateCountry() {
   const countryCode = countryCodeField.value;
   const lat = insert.querySelector('.lat').querySelector('span').innerText;
   const lng = insert.querySelector('.lng').querySelector('span').innerText;
+  const timezone = insert.querySelector('.timezone-multi');
+  const timezoneValue = Array(...timezone.options).reduce((acc, option) => {
+    if (option.selected === true) {
+      acc.push(option.value);
+    }
+    return acc;
+  }, []);
 
   if (name !== '' && countryCode !== '') {
     updateCountryData(countryId, {
@@ -68,6 +75,7 @@ function updateCountry() {
       country_code: countryCode,
       lat,
       lng,
+      timezone: timezoneValue,
     }).then(() => {
       close.click();
     }).catch((err) => {

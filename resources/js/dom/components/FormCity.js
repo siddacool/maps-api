@@ -1,6 +1,6 @@
 import iterate from '../utils/iterate-data';
 import CountrySelect from './CountrySelect';
-import utcTimezones from '../utc-timezones';
+import CityTimezoneSelect from './TimezoneSelect';
 
 function makeTextbox(data, name, placeholder) {
   const modName = name.replace(/-/g, '_');
@@ -21,25 +21,12 @@ function makeFixed(data, name, value) {
   `;
 }
 
-function makeTimezone(data) {
-  return `
-    <label for="timezone" class="txt txt--select">
-      <select class="timezone" name="timezone" id="timezone-select">
-        <option value="" disabled selected>Pick a Timezone</option>
-        ${utcTimezones.map(tz => `
-          <option value="${tz}" ${data && data.timezone && data.timezone === tz ? 'selected' : ''}>${tz}</option>
-        `).join('')}
-      </select>
-    </label>
-  `;
-}
-
 export default function (lat, lng, data = {}) {
   const cityName = makeTextbox(data, 'name', 'City Name');
   const countryCode = new CountrySelect(data, 'country-code', 'Country Name');
   const lati = makeFixed(data, 'lat', lat);
   const lngi = makeFixed(data, 'lng', lng);
-  const timezone = makeTimezone(data);
+  const timezone = new CityTimezoneSelect(data, 'timezone', 'Pick a Timezone');
   const area = makeTextbox(data, 'area', 'Area');
 
   return `
@@ -49,7 +36,7 @@ export default function (lat, lng, data = {}) {
       ${lati}
       ${lngi}
       <div class="gap"></div>
-      ${timezone}
+      ${timezone.Render()}
       ${area}
       <label class="checkbox">
         <input type="checkbox" name="isCapital" value="isCapital" class="isCapital" 

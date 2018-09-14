@@ -15,6 +15,10 @@
 
   select {
     padding-left: 0;
+
+    &[multiple] {
+      max-height: 83px;
+    }
   }
 
   input:focus::-webkit-input-placeholder { color:transparent; }
