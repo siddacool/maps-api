@@ -45,6 +45,7 @@ function saveCountryData(obj = {}) {
     const countryCode = obj.country_code;
     const lat = obj.lat;
     const lng = obj.lng;
+    const timezone = obj.timezone || [];
 
     dbRefObject.push({
       country_id: countryId,
@@ -52,6 +53,7 @@ function saveCountryData(obj = {}) {
       country_code: countryCode,
       lat,
       lng,
+      timezone,
     })
     .then(() => {
       resolve();
@@ -112,6 +114,7 @@ function updateCountryData(countryId, obj = {}) {
     const countryCode = obj.country_code;
     const lat = obj.lat;
     const lng = obj.lng;
+    const timezone = obj.timezone || [];
 
     dbRefObject.once('value', (snap) => {
       if (snap.val()) {
@@ -126,6 +129,7 @@ function updateCountryData(countryId, obj = {}) {
               country_code: countryCode,
               lat,
               lng,
+              timezone,
             });
           }
         });
@@ -251,6 +255,35 @@ function findPlaceByCoordinates(lat, lng) {
   return promiseObj;
 }
 
+function findCountryByCountryCode(countryCode) {
+  const promiseObj = new Promise((resolve, reject) => {
+    const dbRefObject = firebase.database().ref();
+    dbRefObject.once('value', (snap) => {
+      if (snap.val()) {
+        const valueSnap = snap.val();
+        const toPush = '';
+
+        Object.keys(valueSnap).forEach((key) => {
+          const thisCountry = valueSnap[key];
+
+          if (thisCountry.country_id && thisCountry.country_code === countryCode) {
+            resolve(thisCountry);
+            return;
+          }
+        });
+
+        resolve(toPush);
+      } else {
+        reject('NO DATA');
+      }
+    }).catch(() => {
+      reject();
+    });
+  });
+
+  return promiseObj;
+}
+
 function getAllPlaces() {
   const promiseObj = new Promise((resolve, reject) => {
     const dbRefObject = firebase.database().ref();
@@ -341,6 +374,7 @@ export {
   deleteCityData,
   deleteCountryData,
   findPlaceByCoordinates,
+  findCountryByCountryCode,
   getAllPlaces,
   getAllCities,
   getAllCountries,

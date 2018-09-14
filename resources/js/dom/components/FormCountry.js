@@ -1,4 +1,32 @@
+import utcTimezones from '../utc-timezones';
 import iterate from '../utils/iterate-data';
+
+function makeTimezoneMulti(data, placeholder) {
+  const selectArr = [];
+
+  utcTimezones.forEach((tz) => {
+    const thisTz = tz;
+    const findMatch = data && data.timezone && data.timezone.length > 0 ?
+                      data.timezone.filter(d => d === thisTz)
+                      : [];
+
+    selectArr.push({
+      timezone: thisTz,
+      isSelected: findMatch.length > 0,
+    });
+  });
+
+  return `
+    <label for="timezone-multi" class="txt txt--select txt--select--multi">
+      <select class="timezone-multi" name="timezone-multi" id="timezone-select-multi" multiple>
+        <option value="" disabled>${placeholder}</option>
+        ${selectArr.map(tz => `
+          <option value="${tz.timezone}" ${tz.isSelected ? 'selected="selected"' : ''}>${tz.timezone}</option>
+        `).join('')}
+      </select>
+    </label>
+  `;
+}
 
 function makeTextbox(data, name, placeholder) {
   const modName = name.replace(/-/g, '_');
@@ -24,6 +52,7 @@ export default function (lat, lng, data = {}) {
   const countryCode = makeTextbox(data, 'country-code', 'Country Code');
   const lati = makeFixed(data, 'lat', lat);
   const lngi = makeFixed(data, 'lng', lng);
+  const timezones = makeTimezoneMulti(data, 'Pick a Timezone');
 
   return `
     <div class="info__form info__form--city" data-type="country" data-id="${iterate(data, 'country_id')}">
@@ -31,6 +60,7 @@ export default function (lat, lng, data = {}) {
      ${countryCode}
      ${lati}
      ${lngi}
+     ${timezones}
     </div>
   `;
 }
