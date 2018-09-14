@@ -381,7 +381,7 @@ var _app = __webpack_require__(8);
 
 var firebase = _interopRequireWildcard(_app);
 
-__webpack_require__(38);
+__webpack_require__(37);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -995,7 +995,7 @@ exports.default = Provider;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__zones_localZone__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__impl_locale__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__impl_zoneUtil__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__impl_zoneUtil__ = __webpack_require__(33);
 
 
 
@@ -1576,9 +1576,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__zones_localZone__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__impl_locale__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__impl_util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__impl_zoneUtil__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__impl_zoneUtil__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__impl_diff__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__impl_regexParser__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__impl_regexParser__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__impl_tokenParser__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__impl_conversions__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__impl_formats__ = __webpack_require__(20);
@@ -4536,7 +4536,7 @@ class Formatter {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__impl_util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__impl_locale__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__impl_formatter__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__impl_regexParser__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__impl_regexParser__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__settings__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__errors__ = __webpack_require__(14);
 
@@ -5838,7 +5838,7 @@ exports.default = class extends _domrFramework.Component {
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var util = __webpack_require__(36);
+var util = __webpack_require__(35);
 
 /**
  * Copyright 2017 Google Inc.
@@ -6292,7 +6292,7 @@ var _CountrySelect = __webpack_require__(91);
 
 var _CountrySelect2 = _interopRequireDefault(_CountrySelect);
 
-var _TimezoneSelect = __webpack_require__(106);
+var _TimezoneSelect = __webpack_require__(92);
 
 var _TimezoneSelect2 = _interopRequireDefault(_TimezoneSelect);
 
@@ -6341,20 +6341,6 @@ exports.default = iterateData;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var utczones = ['-12:00', '-11:45', '-11:30', '-11:15', '-11:00', '-10:45', '-10:30', '-10:15', '-10:00', '-09:45', '-09:30', '-09:15', '-09:00', '-08:45', '-08:30', '-08:15', '-08:00', '-07:45', '-07:30', '-07:15', '-07:00', '-06:45', '-06:30', '-06:15', '-06:00', '-05:45', '-05:30', '-05:15', '-05:00', '-04:45', '-04:30', '-04:15', '-04:00', '-03:45', '-03:30', '-03:15', '-03:00', '-02:45', '-02:30', '-02:15', '-02:00', '-01:45', '-01:30', '-01:15', '-01:00', '+00:00', '+01:00', '+01:15', '+01:30', '+01:45', '+02:00', '+02:15', '+02:30', '+02:45', '+03:00', '+03:15', '+03:30', '+03:45', '+04:00', '+04:15', '+04:30', '+04:45', '+05:00', '+05:15', '+05:30', '+05:45', '+06:00', '+06:15', '+06:30', '+06:45', '+07:00', '+07:15', '+07:30', '+07:45', '+08:00', '+08:15', '+08:30', '+08:45', '+09:00', '+09:15', '+09:30', '+09:45', '+10:00', '+10:15', '+10:30', '+10:45', '+11:00', '+11:15', '+11:30', '+11:45', '+12:00', '+12:15', '+12:30', '+12:45', '+13:00', '+13:15', '+13:30', '+13:45', '+14:00'];
-
-exports.default = utczones;
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 exports.default = function (lat, lng) {
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -6368,7 +6354,7 @@ exports.default = function (lat, lng) {
   return '\n    <div class="info__form info__form--city" data-type="country" data-id="' + (0, _iterateData2.default)(data, 'country_id') + '">\n     ' + countryName + '\n     ' + countryCode + '\n     ' + lati + '\n     ' + lngi + '\n     ' + timezones + '\n    </div>\n  ';
 };
 
-var _utcTimezones = __webpack_require__(27);
+var _utcTimezones = __webpack_require__(38);
 
 var _utcTimezones2 = _interopRequireDefault(_utcTimezones);
 
@@ -6380,6 +6366,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function makeTimezoneMulti(data, placeholder) {
   var selectArr = [];
+  var startArr = [];
+  var endArr = [];
 
   _utcTimezones2.default.forEach(function (tz) {
     var thisTz = tz;
@@ -6392,6 +6380,16 @@ function makeTimezoneMulti(data, placeholder) {
       isSelected: findMatch.length > 0
     });
   });
+
+  selectArr.forEach(function (s) {
+    if (s.isSelected) {
+      startArr.push(s);
+    } else {
+      endArr.push(s);
+    }
+  });
+
+  selectArr = startArr.concat(endArr);
 
   return '\n    <label for="timezone-multi" class="txt txt--select txt--select--multi">\n      <select class="timezone-multi" name="timezone-multi" id="timezone-select-multi" multiple>\n        <option value="" disabled>' + placeholder + '</option>\n        ' + selectArr.map(function (tz) {
     return '\n          <option value="' + tz.timezone + '" ' + (tz.isSelected ? 'selected="selected"' : '') + '>' + tz.timezone + '</option>\n        ';
@@ -6408,7 +6406,7 @@ function makeFixed(data, name, value) {
 }
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6420,7 +6418,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _purpleMapsApi = __webpack_require__(54);
 
-var _MapBase = __webpack_require__(30);
+var _MapBase = __webpack_require__(29);
 
 var _MapBase2 = _interopRequireDefault(_MapBase);
 
@@ -6555,7 +6553,7 @@ exports.default = class extends _MapBase2.default {
 };
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6652,7 +6650,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -6722,7 +6720,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6740,7 +6738,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _domUtils = __webpack_require__(11);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6868,7 +6866,7 @@ var SearchElement = function () {
 exports.default = SearchElement;
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6887,7 +6885,7 @@ var ARROW_RIGHT_KEY = exports.ARROW_RIGHT_KEY = 39;
 var SPECIAL_KEYS = exports.SPECIAL_KEYS = [ENTER_KEY, ESCAPE_KEY, ARROW_DOWN_KEY, ARROW_UP_KEY, ARROW_LEFT_KEY, ARROW_RIGHT_KEY];
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6938,7 +6936,7 @@ function normalizeZone(input, defaultZone) {
 
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7240,7 +7238,7 @@ function parseSQL(s) {
 
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7248,7 +7246,7 @@ function parseSQL(s) {
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var tslib_1 = __webpack_require__(37);
+var tslib_1 = __webpack_require__(36);
 
 /**
  * Copyright 2017 Google Inc.
@@ -9027,7 +9025,7 @@ exports.stringToByteArray = stringToByteArray$1;
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9232,7 +9230,7 @@ function __importDefault(mod) {
 
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9259,6 +9257,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var utczones = ['-12:00', '-11:45', '-11:30', '-11:15', '-11:00', '-10:45', '-10:30', '-10:15', '-10:00', '-09:45', '-09:30', '-09:15', '-09:00', '-08:45', '-08:30', '-08:15', '-08:00', '-07:45', '-07:30', '-07:15', '-07:00', '-06:45', '-06:30', '-06:15', '-06:00', '-05:45', '-05:30', '-05:15', '-05:00', '-04:45', '-04:30', '-04:15', '-04:00', '-03:45', '-03:30', '-03:15', '-03:00', '-02:45', '-02:30', '-02:15', '-02:00', '-01:45', '-01:30', '-01:15', '-01:00', '+00:00', '+01:00', '+01:15', '+01:30', '+01:45', '+02:00', '+02:15', '+02:30', '+02:45', '+03:00', '+03:15', '+03:30', '+03:45', '+04:00', '+04:15', '+04:30', '+04:45', '+05:00', '+05:15', '+05:30', '+05:45', '+06:00', '+06:15', '+06:30', '+06:45', '+07:00', '+07:15', '+07:30', '+07:45', '+08:00', '+08:15', '+08:30', '+08:45', '+09:00', '+09:15', '+09:30', '+09:45', '+10:00', '+10:15', '+10:30', '+10:45', '+11:00', '+11:15', '+11:30', '+11:45', '+12:00', '+12:15', '+12:30', '+12:45', '+13:00', '+13:15', '+13:30', '+13:45', '+14:00'];
+
+exports.default = utczones;
+
+/***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9267,7 +9279,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __webpack_require__(40);
 
-__webpack_require__(101);
+__webpack_require__(100);
 
 /***/ }),
 /* 40 */
@@ -9985,7 +9997,7 @@ var _AdminPageView = __webpack_require__(78);
 
 var _AdminPageView2 = _interopRequireDefault(_AdminPageView);
 
-var _ApiView = __webpack_require__(99);
+var _ApiView = __webpack_require__(98);
 
 var _ApiView2 = _interopRequireDefault(_ApiView);
 
@@ -10045,7 +10057,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _MapPublic = __webpack_require__(29);
+var _MapPublic = __webpack_require__(28);
 
 var _MapPublic2 = _interopRequireDefault(_MapPublic);
 
@@ -24171,7 +24183,7 @@ Object.defineProperty(exports, 'GeoSearchControl', {
   }
 });
 
-var _searchElement = __webpack_require__(32);
+var _searchElement = __webpack_require__(31);
 
 Object.defineProperty(exports, 'SearchElement', {
   enumerable: true,
@@ -24250,7 +24262,7 @@ var _lodash = __webpack_require__(62);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _searchElement = __webpack_require__(32);
+var _searchElement = __webpack_require__(31);
 
 var _searchElement2 = _interopRequireDefault(_searchElement);
 
@@ -24260,7 +24272,7 @@ var _resultList2 = _interopRequireDefault(_resultList);
 
 var _domUtils = __webpack_require__(11);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24826,7 +24838,7 @@ module.exports = function(tick){
     return Zousan ;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(31).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(30).setImmediate))
 
 /***/ }),
 /* 60 */
@@ -28041,7 +28053,7 @@ var _AdminPageContainer = __webpack_require__(84);
 
 var _AdminPageContainer2 = _interopRequireDefault(_AdminPageContainer);
 
-var _config = __webpack_require__(98);
+var _config = __webpack_require__(97);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -29585,7 +29597,7 @@ var iterator = _wksExt.f('iterator');
  * limitations under the License.
  */
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(31).setImmediate, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(30).setImmediate, __webpack_require__(2)))
 
 /***/ }),
 /* 80 */
@@ -30396,7 +30408,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _domrFramework = __webpack_require__(0);
 
-var _MapPublic = __webpack_require__(29);
+var _MapPublic = __webpack_require__(28);
 
 var _MapPublic2 = _interopRequireDefault(_MapPublic);
 
@@ -30561,9 +30573,9 @@ var _app = __webpack_require__(8);
 
 var firebase = _interopRequireWildcard(_app);
 
-__webpack_require__(38);
+__webpack_require__(37);
 
-var _MapBase = __webpack_require__(30);
+var _MapBase = __webpack_require__(29);
 
 var _MapBase2 = _interopRequireDefault(_MapBase);
 
@@ -30571,7 +30583,7 @@ var _InfoCreate = __webpack_require__(89);
 
 var _InfoCreate2 = _interopRequireDefault(_InfoCreate);
 
-var _InfoEdit = __webpack_require__(95);
+var _InfoEdit = __webpack_require__(94);
 
 var _InfoEdit2 = _interopRequireDefault(_InfoEdit);
 
@@ -30712,9 +30724,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var util = __webpack_require__(36);
+var util = __webpack_require__(35);
 var logger = __webpack_require__(88);
-var tslib_1 = __webpack_require__(37);
+var tslib_1 = __webpack_require__(36);
 var firebase = _interopDefault(__webpack_require__(23));
 
 /**
@@ -46290,11 +46302,11 @@ var _FormCity = __webpack_require__(25);
 
 var _FormCity2 = _interopRequireDefault(_FormCity);
 
-var _FormCountry = __webpack_require__(28);
+var _FormCountry = __webpack_require__(27);
 
 var _FormCountry2 = _interopRequireDefault(_FormCountry);
 
-var _InfoSaveBtn = __webpack_require__(94);
+var _InfoSaveBtn = __webpack_require__(93);
 
 var _InfoSaveBtn2 = _interopRequireDefault(_InfoSaveBtn);
 
@@ -46347,7 +46359,7 @@ var _FormCity = __webpack_require__(25);
 
 var _FormCity2 = _interopRequireDefault(_FormCity);
 
-var _FormCountry = __webpack_require__(28);
+var _FormCountry = __webpack_require__(27);
 
 var _FormCountry2 = _interopRequireDefault(_FormCountry);
 
@@ -46452,9 +46464,67 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 92 */,
-/* 93 */,
-/* 94 */
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _domrFramework = __webpack_require__(0);
+
+var _utcTimezones = __webpack_require__(38);
+
+var _utcTimezones2 = _interopRequireDefault(_utcTimezones);
+
+var _firebaseDbManipulation = __webpack_require__(3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = class extends _domrFramework.Component {
+  constructor(obj, name, placeholder) {
+    super();
+    this.obj = obj;
+    this.name = name;
+    this.placeholder = placeholder;
+  }
+
+  Markup() {
+    var placeholder = this.placeholder;
+    var name = this.name;
+
+    return '\n      <label for="' + name + '" class="txt txt--select">\n        <select class="' + name + '" name="' + name + '" id="timezone-select">\n          <option value="" disabled selected>' + placeholder + '</option>\n        </select>\n      </label>\n    ';
+  }
+
+  AfterRenderDone() {
+    var select = document.getElementById('timezone-select');
+    var obj = this.obj;
+
+    (0, _firebaseDbManipulation.findCountryByCountryCode)(obj.country_code).then(function (findCountry) {
+      if (findCountry !== '' && findCountry.timezone && findCountry.timezone.length > 0) {
+        var timezones = findCountry.timezone;
+
+        if (timezones.length === 1) {
+          select.innerHTML += '\n            <option value="' + timezones[0] + '" selected>' + timezones[0] + '</option>\n          ';
+        } else {
+          select.innerHTML += '\n            ' + timezones.map(function (tz) {
+            return '\n              <option value="' + tz + '" ' + (obj.timezone && obj.timezone === tz ? 'selected' : '') + '>' + tz + '</option>\n            ';
+          }).join('') + '\n          ';
+        }
+      } else {
+        select.innerHTML += '\n          ' + _utcTimezones2.default.map(function (tz) {
+          return '\n            <option value="' + tz + '" ' + (obj.timezone && obj.timezone === tz ? 'selected' : '') + '>' + tz + '</option>\n          ';
+        }).join('') + '\n        ';
+      }
+    });
+  }
+};
+
+/***/ }),
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46585,7 +46655,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46605,15 +46675,15 @@ var _FormCity = __webpack_require__(25);
 
 var _FormCity2 = _interopRequireDefault(_FormCity);
 
-var _FormCountry = __webpack_require__(28);
+var _FormCountry = __webpack_require__(27);
 
 var _FormCountry2 = _interopRequireDefault(_FormCountry);
 
-var _InfoUpdateBtn = __webpack_require__(96);
+var _InfoUpdateBtn = __webpack_require__(95);
 
 var _InfoUpdateBtn2 = _interopRequireDefault(_InfoUpdateBtn);
 
-var _InfoDeleteBtn = __webpack_require__(97);
+var _InfoDeleteBtn = __webpack_require__(96);
 
 var _InfoDeleteBtn2 = _interopRequireDefault(_InfoDeleteBtn);
 
@@ -46651,7 +46721,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46782,7 +46852,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46843,7 +46913,7 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46865,7 +46935,7 @@ var config = {
 exports.default = config;
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46882,14 +46952,14 @@ exports.default = function () {
   wrapper.innerHTML = apiPageContainer.Render();
 };
 
-var _ApiPageContainer = __webpack_require__(100);
+var _ApiPageContainer = __webpack_require__(99);
 
 var _ApiPageContainer2 = _interopRequireDefault(_ApiPageContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46947,74 +47017,10 @@ exports.default = class extends _domrFramework.Component {
 };
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _domrFramework = __webpack_require__(0);
-
-var _utcTimezones = __webpack_require__(27);
-
-var _utcTimezones2 = _interopRequireDefault(_utcTimezones);
-
-var _firebaseDbManipulation = __webpack_require__(3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = class extends _domrFramework.Component {
-  constructor(obj, name, placeholder) {
-    super();
-    this.obj = obj;
-    this.name = name;
-    this.placeholder = placeholder;
-  }
-
-  Markup() {
-    var placeholder = this.placeholder;
-    var name = this.name;
-
-    return '\n      <label for="' + name + '" class="txt txt--select">\n        <select class="' + name + '" name="' + name + '" id="timezone-select">\n          <option value="" disabled selected>' + placeholder + '</option>\n        </select>\n      </label>\n    ';
-  }
-
-  AfterRenderDone() {
-    var select = document.getElementById('timezone-select');
-    var obj = this.obj;
-
-    (0, _firebaseDbManipulation.findCountryByCountryCode)(obj.country_code).then(function (findCountry) {
-      if (findCountry !== '' && findCountry.timezone && findCountry.timezone.length > 0) {
-        var timezones = findCountry.timezone;
-
-        if (timezones.length === 1) {
-          select.innerHTML += '\n            <option value="' + timezones[0] + '" selected>' + timezones[0] + '</option>\n          ';
-        } else {
-          select.innerHTML += '\n            ' + timezones.map(function (tz) {
-            return '\n              <option value="' + tz + '" ' + (obj.timezone && obj.timezone === tz ? 'selected' : '') + '>' + tz + '</option>\n            ';
-          }).join('') + '\n          ';
-        }
-      } else {
-        select.innerHTML += '\n          ' + _utcTimezones2.default.map(function (tz) {
-          return '\n            <option value="' + tz + '" ' + (obj.timezone && obj.timezone === tz ? 'selected' : '') + '>' + tz + '</option>\n          ';
-        }).join('') + '\n        ';
-      }
-    });
-  }
-};
 
 /***/ })
 /******/ ]);
