@@ -71,8 +71,6 @@ export default class extends Component {
 
     if (data.timezone && data.timezone !== '') {
       const timeToUpdate = DateTime.utc().setZone(`UTC${data.timezone}`).toFormat('hh:mm:ssa dd MMM');
-
-      console.log(timeToUpdate);
     }
 
     return `

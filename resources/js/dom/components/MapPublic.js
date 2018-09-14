@@ -119,7 +119,6 @@ export default class extends MapBase {
       if (isLocatePop) {
         FindPlaceByCoordinates(e.latlng.lat, e.latlng.lng)
         .then((data) => {
-          console.log(data);
           if (data !== '') {
             appendInfoDisplay(thisSelf, data);
           } else {

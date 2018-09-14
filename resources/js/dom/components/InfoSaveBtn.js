@@ -67,8 +67,6 @@ function saveCountry() {
     return acc;
   }, []);
 
-  console.log(timezoneValue);
-
   if (name !== '' && countryCode !== '') {
     saveCountryData({
       name,
