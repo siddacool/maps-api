@@ -6538,7 +6538,6 @@ exports.default = class extends _MapBase2.default {
 
       if (isLocatePop) {
         (0, _purpleMapsApi.FindPlaceByCoordinates)(e.latlng.lat, e.latlng.lng).then(function (data) {
-          console.log(data);
           if (data !== '') {
             appendInfoDisplay(thisSelf, data);
           } else {
@@ -26055,8 +26054,6 @@ exports.default = class extends _domrFramework.Component {
 
     if (data.timezone && data.timezone !== '') {
       var timeToUpdate = _datetime2.default.utc().setZone('UTC' + data.timezone).toFormat('hh:mm:ssa dd MMM');
-
-      console.log(timeToUpdate);
     }
 
     return '\n      <div class="info info--display">\n        <div class="container">\n          ' + close.Render() + '\n          ' + place + '\n        </div>\n      </div>\n    ';
@@ -46395,7 +46392,6 @@ exports.default = class extends _domrFramework.Component {
       var activeForm = SelectForm(lat, lng);
       var otherButton = parent.querySelector('[data-id="' + (name === 'city' ? 'country' : 'city') + '"]');
 
-      console.log(otherButton);
       otherButton.classList.remove('btn--active');
       self.classList.add('btn--active');
 
@@ -46601,8 +46597,6 @@ function saveCountry() {
     }
     return acc;
   }, []);
-
-  console.log(timezoneValue);
 
   if (name !== '' && countryCode !== '') {
     (0, _firebaseDbManipulation.saveCountryData)({
